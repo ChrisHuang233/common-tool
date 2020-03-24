@@ -2,6 +2,7 @@ package com.huangwei.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,10 @@ import java.util.regex.Pattern;
  * 字符串工具类
  */
 public class StringUtil {
+
+	// 默认编码格式
+	public static final String DEFAULT_CHARSET_STRING = "UTF-8";
+	public static final Charset DEFAULT_CHARSET = Charset.forName(DEFAULT_CHARSET_STRING);
 
 	/** 空字符串 */
 	public static final String Empty = "";
