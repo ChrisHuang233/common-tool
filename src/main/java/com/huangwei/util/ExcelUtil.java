@@ -14,14 +14,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Excel工具类
  */
+@Slf4j
 public class ExcelUtil {
-	protected static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
 	/**
 	 * Excel导出
@@ -74,7 +74,7 @@ public class ExcelUtil {
 			filename += ".xlsx";
 		}
 
-		logger.debug("[Excel导出]Begin...filename:{} currentTime:{}", filename, System.currentTimeMillis());
+		log.debug("[Excel导出]Begin...filename:{} currentTime:{}", filename, System.currentTimeMillis());
 		OutputStream output = null;
 		try {
 			response.setContentType("text/html;charset=UTF-8");
@@ -89,13 +89,13 @@ public class ExcelUtil {
 			excel.write(output);
 			output.flush();
 		} catch (Exception e) {
-			logger.error("[Excel导出]出错！filename:{}", filename, e);
+			log.error("[Excel导出]出错！filename:{}", filename, e);
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
 				} catch (Exception e) {
-					logger.error("[Excel导出]关闭输出流出错！filename:{}", filename, e);
+					log.error("[Excel导出]关闭输出流出错！filename:{}", filename, e);
 				}
 			}
 			if (excel != null) {
@@ -103,7 +103,7 @@ public class ExcelUtil {
 				excel = null;
 			}
 		}
-		logger.debug("[Excel导出]End...filename:{} currentTime:{}", filename, System.currentTimeMillis());
+		log.debug("[Excel导出]End...filename:{} currentTime:{}", filename, System.currentTimeMillis());
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class ExcelUtil {
 			sheetName = "Excel_" + System.currentTimeMillis();
 		}
 
-		logger.debug("[Excel导出]Begin...sheetName:{} title:{} currentTime:{}", sheetName, title,
+		log.debug("[Excel导出]Begin...sheetName:{} title:{} currentTime:{}", sheetName, title,
 				System.currentTimeMillis());
 		SXSSFWorkbook excel = new SXSSFWorkbook(
 				(columnValues == null || columnValues.isEmpty()) ? SXSSFWorkbook.DEFAULT_WINDOW_SIZE
@@ -204,7 +204,7 @@ public class ExcelUtil {
 			}
 		}
 		export(request, response, excel, sheetName);
-		logger.debug("[Excel导出]End...sheetName:{} title:{} currentTime:{}", sheetName, title,
+		log.debug("[Excel导出]End...sheetName:{} title:{} currentTime:{}", sheetName, title,
 				System.currentTimeMillis());
 	}
 
@@ -227,7 +227,7 @@ public class ExcelUtil {
 			// 空格经URLEncoder转换后会变成"+"(加号)，需要替换为"%20"
 			encodedName = URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
 		} catch (UnsupportedEncodingException e) {// 正常情况下不会出错
-			logger.error("文件名编码出错！filename:" + filename, e);
+			log.error("文件名编码出错！filename:" + filename, e);
 			encodedName = filename;
 		}
 
@@ -266,7 +266,7 @@ public class ExcelUtil {
 				encodedName = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
 			}
 		} catch (UnsupportedEncodingException e) {// 正常情况下不会出错
-			logger.error("文件名编码出错！filename:" + filename, e);
+			log.error("文件名编码出错！filename:" + filename, e);
 			if (encodedName == null) {
 				encodedName = filename;
 			}

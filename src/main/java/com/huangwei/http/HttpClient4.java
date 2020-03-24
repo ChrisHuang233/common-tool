@@ -28,14 +28,14 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * HttpClient工具
  */
+@Slf4j
 public class HttpClient4 {
-	protected static Logger logger = LoggerFactory.getLogger(HttpClient4.class);
 
 	/** 连接超时时间（单位：毫秒） */
 	private static final int CONNECT_TIMEOUT = 1000 * 5;
@@ -65,7 +65,7 @@ public class HttpClient4 {
 		CloseableHttpClient client = getClientInstance(url);// HttpClient实例
 		CloseableHttpResponse response = null;
 		try {
-			logger.info("地址：" + url);
+			log.info("地址：" + url);
 			HttpGet get = new HttpGet(url);// GET方法实例
 			setTimeout(get, CONNECT_TIMEOUT, SOCKET_TIMEOUT);// 设置超时时间
 			customRequestHeader(get);// 定制请求头
@@ -73,19 +73,19 @@ public class HttpClient4 {
 			beginTime = System.nanoTime();
 			response = client.execute(get);
 		} catch (Exception e) {
-			logger.error("通讯异常：" + e);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.error("通讯异常：" + e);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			closeClient(client, response);
 			throw e;
 		}
 
 		try {
 			int code = response.getStatusLine().getStatusCode();
-			logger.info("状态码：" + code);
+			log.info("状态码：" + code);
 			HttpEntity entity = response.getEntity();
 			if (entity == null) {
-				logger.warn("响应消息为空...");
-				logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+				log.warn("响应消息为空...");
+				log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 				return null;
 			}
 
@@ -112,12 +112,12 @@ public class HttpClient4 {
 				reader.close();
 				result = sb.toString();
 			}
-			logger.info("返回：" + result);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.info("返回：" + result);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			return result.length() == 0 ? null : result;
 		} catch (Exception e) {
-			logger.error("处理响应出现异常：" + e);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.error("处理响应出现异常：" + e);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			throw e;
 		} finally {
 			closeClient(client, response);
@@ -158,21 +158,21 @@ public class HttpClient4 {
 		CloseableHttpClient client = getClientInstance(url);// HttpClient实例
 		CloseableHttpResponse response = null;
 		try {
-			logger.info("地址：" + url);
+			log.info("地址：" + url);
 			HttpPost post = new HttpPost(url);// POST方法实例
 			setTimeout(post, CONNECT_TIMEOUT, SOCKET_TIMEOUT);// 设置超时时间
 			customRequestHeader(post);// 定制请求头
 
 			if (entity != null) {
 				post.setEntity(entity);// 设置参数
-				logger.info("参数：" + EntityUtils.toString(entity));
+				log.info("参数：" + EntityUtils.toString(entity));
 			}
 
 			beginTime = System.nanoTime();
 			response = client.execute(post);
 		} catch (Exception e) {
-			logger.error("通讯异常：" + e);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.error("通讯异常：" + e);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			closeClient(client, response);
 			throw e;
 		}
@@ -180,11 +180,11 @@ public class HttpClient4 {
 		try {
 			int code = response.getStatusLine().getStatusCode();
 
-			logger.info("状态码：" + code);
+			log.info("状态码：" + code);
 			entity = response.getEntity();
 			if (entity == null) {
-				logger.warn("响应消息为空...");
-				logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+				log.warn("响应消息为空...");
+				log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 				return null;
 			}
 
@@ -211,12 +211,12 @@ public class HttpClient4 {
 				reader.close();
 				result = sb.toString();
 			}
-			logger.info("返回：" + result);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.info("返回：" + result);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			return result.length() == 0 ? null : result;
 		} catch (Exception e) {
-			logger.error("处理响应出现异常：" + e);
-			logger.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
+			log.error("处理响应出现异常：" + e);
+			log.info("用时：" + (System.nanoTime() - beginTime) / 1000000L + "毫秒");
 			throw e;
 		} finally {
 			closeClient(client, response);
@@ -229,7 +229,7 @@ public class HttpClient4 {
 			try {
 				response.close();
 			} catch (Exception e) {
-				logger.error("关闭HttpResponse出错：" + e.toString());
+				log.error("关闭HttpResponse出错：" + e.toString());
 			}
 		}
 
@@ -237,7 +237,7 @@ public class HttpClient4 {
 			try {
 				client.close();
 			} catch (Exception e) {
-				logger.error("关闭HttpClient出错：" + e.toString());
+				log.error("关闭HttpClient出错：" + e.toString());
 			}
 		}
 	}
@@ -273,7 +273,7 @@ public class HttpClient4 {
 
 			return HttpClients.custom().setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext)).build();
 		} catch (Exception e) {
-			logger.error("创建SSL客户端出现异常：" + e);
+			log.error("创建SSL客户端出现异常：" + e);
 			return HttpClients.createDefault();
 		}
 	}

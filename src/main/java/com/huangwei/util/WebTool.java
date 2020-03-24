@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Web页面相关工具
  */
+@Slf4j
 public class WebTool {
-	private static Logger logger = LoggerFactory.getLogger(WebTool.class);
 
 	/**
 	 * 单一查询条件
@@ -25,7 +25,7 @@ public class WebTool {
 	 */
 	public static Map<String, Object> condition(String key, Object value) {
 		if (key == null || "".equals(key = key.trim()) || value == null) {
-			logger.error("[单一查询条件]参数错误！key:" + key + " value:" + value);
+			log.error("[单一查询条件]参数错误！key:" + key + " value:" + value);
 			return null;
 		}
 
@@ -45,7 +45,7 @@ public class WebTool {
 	 */
 	public static Map<String, Object> simpleResult(String key, Object value) {
 		if (key == null || "".equals(key = key.trim()) || value == null) {
-			logger.error("[简单结果]参数错误！key:" + key + " value:" + value);
+			log.error("[简单结果]参数错误！key:" + key + " value:" + value);
 			return null;
 		}
 

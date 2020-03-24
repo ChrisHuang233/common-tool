@@ -3,14 +3,13 @@ package com.huangwei.util;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base64工具类
  */
+@Slf4j
 public class Base64Util {
-	protected static Logger logger = LoggerFactory.getLogger(Base64Util.class);
 
 	/** 默认字符集（UTF-8） */
 	private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
@@ -62,7 +61,7 @@ public class Base64Util {
 //			return new sun.misc.BASE64Decoder().decodeBuffer(src);// Java 1.7及以下
 			return Base64.getDecoder().decode(src);// Java 1.8
 		} catch (Exception e) {
-			logger.error("Base64解码出错！", e);
+			log.error("Base64解码出错！", e);
 			return new byte[0];
 		}
 	}
