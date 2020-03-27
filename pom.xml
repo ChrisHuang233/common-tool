@@ -29,6 +29,8 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<httpclient.version>4.5.6</httpclient.version>
 		<com.thoughtworks.xstream.version>1.4.7</com.thoughtworks.xstream.version>
+		<commons-compress.version>1.19</commons-compress.version>
+		<version.commons.io>1.4</version.commons.io>
 	</properties>
 
 	<dependencies>
@@ -109,7 +111,17 @@
 			<artifactId>xstream</artifactId>
 			<version>${com.thoughtworks.xstream.version}</version>
 		</dependency>
-
+		<!-- 压缩工具 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commons-compress.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${version.commons.io}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
