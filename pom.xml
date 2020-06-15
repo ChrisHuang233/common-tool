@@ -23,7 +23,7 @@
 		<json-lib.version>2.4</json-lib.version>
 		<poi-ooxml.version>3.17</poi-ooxml.version>
 		<lombok.version>1.16.14</lombok.version>
-		<spring.version>5.0.7.RELEASE</spring.version>
+		<spring.version>5.2.7.RELEASE</spring.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<spring-boot.version>2.0.3.RELEASE</spring-boot.version>
 		<slf4j.version>1.7.25</slf4j.version>
