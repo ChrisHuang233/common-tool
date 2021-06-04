@@ -27,7 +27,7 @@
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<spring-boot.version>2.0.3.RELEASE</spring-boot.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<httpclient.version>4.5.6</httpclient.version>
+		<httpclient.version>4.5.13</httpclient.version>
 		<com.thoughtworks.xstream.version>1.4.7</com.thoughtworks.xstream.version>
 		<commons-compress.version>1.19</commons-compress.version>
 		<version.commons.io>1.4</version.commons.io>
