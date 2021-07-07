@@ -6,7 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 日期工具类
+ * 日期工具类<br>
+ * <br>
+ * 基于 java.util.Date 和 java.text.SimpleDateFormat 实现。
  */
 public class DateUtil {
 
@@ -49,12 +51,14 @@ public class DateUtil {
 	/** 日期格式 - 年-月-日 时:分（yyyy-MM-dd HH:mm） */
 	public static final String PTN_Y_M_D_H_M = "yyyy-MM-dd HH:mm";
 	/** 日期格式 - 年月日时分（yyyyMMddHHmm） */
-	public static final String PTN_YMDHM = "yyyy-MM-dd HH:mm";
+	public static final String PTN_YMDHM = "yyyyMMddHHmm";
 
 	/* ------------------------ 毫秒值 ------------------------ */
 
 	/** 毫秒值 - 一秒 */
 	public static final long ONE_SECOND = 1000L;
+	/** 毫秒值 - 二秒 */
+	public static final long TWO_SECOND = ONE_SECOND * 2L;
 	/** 毫秒值 - 三秒 */
 	public static final long THREE_SECOND = ONE_SECOND * 3L;
 	/** 毫秒值 - 五秒 */
@@ -67,6 +71,8 @@ public class DateUtil {
 	public static final long HALF_MINUTE = ONE_SECOND * 30L;
 	/** 毫秒值 - 一分钟 */
 	public static final long ONE_MINUTE = ONE_SECOND * 60L;
+	/** 毫秒值 - 二分钟 */
+	public static final long TWO_MINUTE = ONE_MINUTE * 2L;
 	/** 毫秒值 - 三分钟 */
 	public static final long THREE_MINUTE = ONE_MINUTE * 3L;
 	/** 毫秒值 - 五分钟 */
@@ -88,6 +94,31 @@ public class DateUtil {
 	/** 毫秒值 - 一年（365天） */
 	public static final long ONE_YEAR = ONE_DAY * 365L;
 
+	/* ------------------------ 常量日期 ------------------------ */
+
+	/** 公元2000年初（2000-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2000 = new Date(946656000000L);
+	/** 公元2010年初（2010-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2010 = new Date(1262275200000L);
+	/** 公元2020年初（2020-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2020 = new Date(1577808000000L);
+	/** 公元2030年初（2030-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2030 = new Date(1893427200000L);
+	/** 公元2040年初（2040-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2040 = new Date(2208960000000L);
+	/** 公元2050年初（2050-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2050 = new Date(2524579200000L);
+	/** 公元2060年初（2060-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2060 = new Date(2840112000000L);
+	/** 公元2070年初（2070-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2070 = new Date(3155731200000L);
+	/** 公元2080年初（2080-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2080 = new Date(3471264000000L);
+	/** 公元2090年初（2090-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2090 = new Date(3786883200000L);
+	/** 公元2100年初（2100-01-01 00:00:00） */
+	public static final Date BEGINNING_OF_2100 = new Date(4102416000000L);
+
 	/* ----------------------- Methods ----------------------- */
 
 	/**
@@ -100,89 +131,77 @@ public class DateUtil {
 	}
 
 	/**
-	 * 当前时间（精度：秒）/舍去毫秒
+	 * 当前整秒（舍去毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date timeOnSecond() {
-		return timeOnSecond(new Date());
+		return timeOnSecond(null);
 	}
 
 	/**
-	 * 时间取整（精度：秒）/舍去毫秒
+	 * 整秒（舍去毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date timeOnSecond(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 
 	/**
-	 * 当前时间（精度：分）/当前分钟零秒
+	 * 当前整分（舍去秒和毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date timeOnMinute() {
-		return timeOnMinute(new Date());
+		return timeOnMinute(null);
 	}
 
 	/**
-	 * 时间取整（精度：分）/当前分钟零秒
+	 * 整分（舍去秒和毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date timeOnMinute(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 
 	/**
-	 * 当前时间（精度：小时）/当前小时零分
+	 * 当前整点（舍去分、秒和毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date timeOnHour() {
-		return timeOnHour(new Date());
+		return timeOnHour(null);
 	}
 
 	/**
-	 * 时间取整（精度：小时）/当前小时零分
+	 * 整点（舍去分、秒和毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date timeOnHour(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
@@ -190,30 +209,28 @@ public class DateUtil {
 	}
 
 	/**
-	 * 当前时间（精度：天）/当天零点
+	 * 今天零点整（0点0分0秒0毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date timeOnDay() {
-		return timeOnDay(new Date());
+		return timeOnDay(null);
 	}
 
 	/**
-	 * 时间取整（精度：天）/当天零点
+	 * 零点整（0点0分0秒0毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
 	 * @throws IllegalArgumentException
 	 *             日期为空
 	 */
 	public static Date timeOnDay(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
@@ -222,30 +239,211 @@ public class DateUtil {
 	}
 
 	/**
-	 * （当前时间）月初
+	 * 今天的开始/零点整（0点0分0秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date todayBegin() {
+		return dayBegin(null);
+	}
+
+	/**
+	 * 今天的开始/零点整（0点0分0秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date dayBegin() {
+		return dayBegin(null);
+	}
+
+	/**
+	 * 一天的开始/零点整（0点0分0秒0毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date dayBegin(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
+	/**
+	 * 今天的结束（23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date todayEnd() {
+		return dayEnd(null);
+	}
+
+	/**
+	 * 今天的结束（23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date dayEnd() {
+		return dayEnd(null);
+	}
+
+	/**
+	 * 一天的结束（23点59分59秒999毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date dayEnd(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
+		return c.getTime();
+	}
+
+	/**
+	 * 今天的结束（23点59分59秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date dayEndOnSecond() {
+		return dayEndOnSecond(null);
+	}
+
+	/**
+	 * 一天的结束（23点59分59秒0毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date dayEndOnSecond(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
+	/**
+	 * 明天此时
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextDay() {
+		return nextDay(null);
+	}
+
+	/**
+	 * 一天后
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextDay(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.add(Calendar.DATE, 1);
+		return c.getTime();
+	}
+
+	/**
+	 * 明天的开始/零点整（0点0分0秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextDayBegin() {
+		return nextDayBegin(null);
+	}
+
+	/**
+	 * 下一天的开始/零点整（0点0分0秒0毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextDayBegin(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		c.add(Calendar.DATE, 1);
+		return c.getTime();
+	}
+
+	/**
+	 * 明天的结束（23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextDayEnd() {
+		return nextDayEnd(null);
+	}
+
+	/**
+	 * 下一天的结束（23点59分59秒999毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextDayEnd(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
+		c.add(Calendar.DATE, 1);
+		return c.getTime();
+	}
+
+	/**
+	 * 当月月初（第一天的0点0分0秒0毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date monthBegin() {
-		return monthBegin(new Date());
+		return monthBegin(null);
 	}
 
 	/**
-	 * 月初
+	 * 月初（第一天的0点0分0秒0毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date monthBegin(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.DATE, 1);
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -255,30 +453,26 @@ public class DateUtil {
 	}
 
 	/**
-	 * （当前时间）月末
+	 * 当月月末（最后一天的23点59分59秒999毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date monthEnd() {
-		return monthEnd(new Date());
+		return monthEnd(null);
 	}
 
 	/**
-	 * 月末
+	 * 月末（最后一天的23点59分59秒999毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date monthEnd(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.DATE, 1);// 当月第一天
 		c.set(Calendar.HOUR_OF_DAY, 23);
 		c.set(Calendar.MINUTE, 59);
@@ -290,7 +484,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * （当前时间）一个月后
+	 * 一个月后
 	 * 
 	 * @return 时间
 	 */
@@ -302,50 +496,222 @@ public class DateUtil {
 	 * 一个月后
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date nextMonth(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
 		}
-
-		return calculateTime(date, Calendar.MONTH, 1);
+		c.add(Calendar.MONTH, 1);
+		return c.getTime();
 	}
 
 	/**
-	 * （当前时间）下月初
+	 * 下月初（第一天的0点0分0秒0毫秒）
 	 * 
 	 * @return 时间
 	 */
 	public static Date nextMonthBegin() {
-		return nextMonthBegin(new Date());
+		return nextMonthBegin(null);
 	}
 
 	/**
-	 * 下月初
+	 * 下月初（第一天的0点0分0秒0毫秒）
 	 * 
 	 * @param date
-	 *            日期（不能为空）
+	 *            日期（为空：当前时间）
 	 * @return 新日期
-	 * @throws IllegalArgumentException
-	 *             日期为空
 	 */
 	public static Date nextMonthBegin(Date date) {
-		if (date == null) {
-			throw new IllegalArgumentException("日期不能为空！");
-		}
-
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		if (date != null) {
+			c.setTime(date);
+		}
 		c.set(Calendar.DATE, 1);
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 		c.add(Calendar.MONTH, 1);// 下个月
+		return c.getTime();
+	}
+
+	/**
+	 * 下月末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextMonthEnd() {
+		return nextMonthEnd(null);
+	}
+
+	/**
+	 * 下月末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextMonthEnd(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.DATE, 1);// 当月第一天
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
+		c.add(Calendar.MONTH, 2);// 下下个月
+		c.add(Calendar.DATE, -1);// 前一天
+		return c.getTime();
+	}
+
+	/**
+	 * 当年年初（第一天的0点0分0秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date yearBegin() {
+		return yearBegin(null);
+	}
+
+	/**
+	 * 年初（第一天的0点0分0秒0毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date yearBegin(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.MONTH, Calendar.JANUARY);// 一月
+		c.set(Calendar.DATE, 1);// 第一天
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
+	/**
+	 * 当年年末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date yearEnd() {
+		return yearEnd(null);
+	}
+
+	/**
+	 * 年末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date yearEnd(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.MONTH, Calendar.DECEMBER);// 十二月
+		c.set(Calendar.DATE, 31);// 最后一天
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
+		return c.getTime();
+	}
+
+	/**
+	 * 一年后
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextYear() {
+		return nextYear(new Date());
+	}
+
+	/**
+	 * 一年后
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.add(Calendar.YEAR, 1);
+		return c.getTime();
+	}
+
+	/**
+	 * 下年初（第一天的0点0分0秒0毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextYearBegin() {
+		return nextYearBegin(null);
+	}
+
+	/**
+	 * 下年初（第一天的0点0分0秒0毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextYearBegin(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.MONTH, Calendar.JANUARY);// 一月
+		c.set(Calendar.DATE, 1);// 第一天
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		c.add(Calendar.YEAR, 1);// 下一年
+		return c.getTime();
+	}
+
+	/**
+	 * 下月末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @return 时间
+	 */
+	public static Date nextYearEnd() {
+		return nextYearEnd(null);
+	}
+
+	/**
+	 * 下月末（最后一天的23点59分59秒999毫秒）
+	 * 
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 新日期
+	 */
+	public static Date nextYearEnd(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+		c.set(Calendar.MONTH, Calendar.DECEMBER);// 十二月
+		c.set(Calendar.DATE, 31);// 最后一天
+		c.set(Calendar.HOUR_OF_DAY, 23);
+		c.set(Calendar.MINUTE, 59);
+		c.set(Calendar.SECOND, 59);
+		c.set(Calendar.MILLISECOND, 999);
 		return c.getTime();
 	}
 
@@ -371,6 +737,15 @@ public class DateUtil {
 		}
 
 		return new SimpleDateFormat(pattern).format(new Date());
+	}
+
+	/**
+	 * 时间戳（年-月-日 时:分:秒.毫秒(yyyy-MM-dd HH:mm:ss.SSS)）
+	 * 
+	 * @return 时间戳
+	 */
+	public static String timestamp() {
+		return new SimpleDateFormat(PTN_Y_M_D_H_M_S_S).format(new Date());
 	}
 
 	/**
@@ -421,11 +796,32 @@ public class DateUtil {
 	 *             格式不匹配
 	 */
 	public static Date parse(final String dateStr) throws ParseException {
-		if (dateStr == null || "".equals(dateStr.trim())) {
+		final String s = dateStr == null ? null : dateStr.trim();
+		if (s == null || "".equals(s)) {
 			throw new IllegalArgumentException("日期字符串不能为空！");
 		}
 
-		return new SimpleDateFormat(PTN_Y_M_D_H_M_S).parse(dateStr);
+		return new SimpleDateFormat(PTN_Y_M_D_H_M_S).parse(s);
+	}
+
+	/**
+	 * (固定格式)日期字符串 -> 日期（安静转换，不抛出异常）
+	 * 
+	 * @param dateStr
+	 *            日期字符串（格式：年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
+	 * @return NULL(参数为空或格式不匹配) 或 日期
+	 */
+	public static Date parseQuiet(final String dateStr) {
+		final String s = dateStr == null ? null : dateStr.trim();
+		if (s == null || "".equals(s)) {
+			return null;
+		}
+
+		try {
+			return new SimpleDateFormat(PTN_Y_M_D_H_M_S).parse(s);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**
@@ -442,15 +838,36 @@ public class DateUtil {
 	 *             格式不匹配
 	 */
 	public static Date parse(final String dateStr, final String pattern) throws ParseException {
-		if (dateStr == null || "".equals(dateStr.trim())) {
+		final String s = dateStr == null ? null : dateStr.trim();
+		final String p = pattern == null ? null : pattern.trim();
+		if (s == null || "".equals(s.trim())) {
 			throw new IllegalArgumentException("日期字符串不能为空！");
 		}
 
-		if (pattern == null || "".equals(pattern.trim())) {
-			return new SimpleDateFormat(PTN_Y_M_D_H_M_S).parse(dateStr);
+		return new SimpleDateFormat((p == null || "".equals(p)) ? PTN_Y_M_D_H_M_S : p).parse(s);
+	}
+
+	/**
+	 * (指定格式)日期字符串 -> 日期（安静转换，不抛出异常）
+	 * 
+	 * @param dateStr
+	 *            日期字符串（不能为空）
+	 * @param pattern
+	 *            日期格式（为空：年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
+	 * @return NULL(参数为空或格式不匹配) 或 日期
+	 */
+	public static Date parseQuiet(final String dateStr, final String pattern) {
+		final String s = dateStr == null ? null : dateStr.trim();
+		final String p = pattern == null ? null : pattern.trim();
+		if (s == null || "".equals(s)) {
+			return null;
 		}
 
-		return new SimpleDateFormat(pattern).parse(dateStr);
+		try {
+			return new SimpleDateFormat((p == null || "".equals(p)) ? PTN_Y_M_D_H_M_S : p).parse(s);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**

@@ -2,26 +2,30 @@ package com.huangwei.util;
 
 import java.security.MessageDigest;
 
+/**
+ * MD5摘要工具
+ */
 public class MD5Util {
 
 	/**
-	 * 32位小写MD5加密
+	 * MD5摘要 - 32位小写
 	 * 
-	 * @param str
-	 *            要加密的字符串（不能为NULL）
-	 * @return null（参数为NULL或加密异常） 或 加密后的32位小写字符串
+	 * @param data
+	 *            数据（不能为NULL）
+	 * @return NULL(参数为NULL或未知异常) 或 32位小写十六进制字符串
 	 */
-	public static String lowercase(String str) {
-		if (str == null)
+	public static String lowercase(String data) {
+		if (data == null) {
 			return null;
+		}
 
 		try {
 			StringBuilder sb = new StringBuilder();
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.update(str.getBytes());
+			md5.update(data.getBytes());
 			for (byte b : md5.digest()) {
-				sb.append(Integer.toHexString(b >>> 4 & 0xf));
-				sb.append(Integer.toHexString(b & 0xf));
+				sb.append(Integer.toHexString(b >>> 4 & 0xF));
+				sb.append(Integer.toHexString(b & 0xF));
 			}
 			return sb.length() < 1 ? null : sb.toString();
 		} catch (Exception e) {
@@ -31,33 +35,35 @@ public class MD5Util {
 	}
 
 	/**
-	 * 32位大写MD5加密
+	 * MD5摘要 - 32位大写
 	 * 
-	 * @param str
-	 *            要加密的字符串（不能为NULL）
-	 * @return null（参数为NULL或加密异常） 或 加密后的32位小写字符串
+	 * @param data
+	 *            数据（不能为NULL）
+	 * @return NULL(参数为NULL或未知异常) 或 32位大写十六进制字符串
 	 */
-	public static String uppercase(String str) {
-		if (str == null)
+	public static String uppercase(String data) {
+		if (data == null) {
 			return null;
+		}
 
-		str = lowercase(str);
-		return str == null ? null : str.toUpperCase();
+		data = lowercase(data);
+		return data == null ? null : data.toUpperCase();
 	}
 
 	/**
-	 * 16位小写MD5加密
+	 * MD5摘要 - 16位小写
 	 * 
-	 * @param str
-	 *            要加密的字符串（不能为NULL）
-	 * @return null（参数为NULL或加密异常） 或 加密后的32位小写字符串
+	 * @param data
+	 *            数据（不能为NULL）
+	 * @return NULL(参数为NULL或未知异常) 或 16位小写十六进制字符串
 	 */
-	public static String half(String str) {
-		if (str == null)
+	public static String half(String data) {
+		if (data == null) {
 			return null;
+		}
 
-		str = lowercase(str);
-		return str == null ? null : str.substring(8, 24);
+		data = lowercase(data);
+		return data == null ? null : data.substring(8, 24);
 	}
 
 }

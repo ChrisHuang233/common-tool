@@ -25,7 +25,7 @@ public class ArrayUtil {
 
 		Integer[] t = new Integer[a.length];
 		for (int i = 0; i < a.length; i++) {
-			t[i] = Integer.valueOf(a[i]);
+			t[i] = a[i];
 		}
 		return t;
 	}

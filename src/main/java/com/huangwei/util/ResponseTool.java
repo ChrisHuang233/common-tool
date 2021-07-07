@@ -11,8 +11,8 @@ import java.util.Map;
 /**
  * Web页面相关工具
  */
-public class WebTool {
-	private static final Logger logger = LoggerFactory.getLogger(WebTool.class);
+public class ResponseTool {
+	private static final Logger logger = LoggerFactory.getLogger(ResponseTool.class);
 
 	/**
 	 * 单一查询条件
@@ -72,7 +72,7 @@ public class WebTool {
 		result.put("iTotalRecords", total);// 总记录数
 		result.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
 		result.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
-		return JsonUtil.toStr(result);
+		return JacksonUtil.toString(result);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class WebTool {
 		result.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
 		result.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
 		result.put("data", data);// 额外数据
-		return JsonUtil.toStr(result);
+		return JacksonUtil.toString(result);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class WebTool {
 		result.put("iTotalRecords", 0);// 总记录数
 		result.put("iTotalDisplayRecords", 0);// (过滤后)显示的记录数
 		result.put("aaData", Collections.EMPTY_LIST);// 结果集
-		return JsonUtil.toStr(result);
+		return JacksonUtil.toString(result);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class WebTool {
 		map.put("result", result);
 		map.put("message", message);
 		map.put("data", data);
-		return JsonUtil.toStr(map);
+		return JacksonUtil.toString(map);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class WebTool {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", result);
 		map.put("message", message);
-		return JsonUtil.toStr(map);
+		return JacksonUtil.toString(map);
 	}
 
 }

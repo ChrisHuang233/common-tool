@@ -20,9 +20,9 @@ public class BCDUtil {
 		}
 
 		StringBuilder sb = new StringBuilder(b.length * 2);
-		for (int i = 0; i < b.length; i++) {
-			sb.append((byte) ((b[i] & 0xF0) >>> 4));
-			sb.append((byte) (b[i] & 0x0F));
+		for (byte value : b) {
+			sb.append((byte) ((value & 0xF0) >>> 4));
+			sb.append((byte) (value & 0x0F));
 		}
 		return sb.toString();
 	}
@@ -40,7 +40,8 @@ public class BCDUtil {
 		if (decimal == null || "".equals(decimal = decimal.trim())) {
 			throw new NullPointerException("十进制字符串不能为空！");
 		}
-		if (decimal.length() % 2 != 0) {// 长度为奇数
+		if (decimal.length() % 2 != 0) {
+			// 长度为奇数
 			decimal = "0" + decimal;
 		}
 

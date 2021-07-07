@@ -28,15 +28,15 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * HttpClient工具
  */
-@Slf4j
 public class HttpClient4 {
-
+	private static final Logger log = LoggerFactory.getLogger(HttpClient4.class);
 	/** 连接超时时间（单位：毫秒） */
 	private static final int CONNECT_TIMEOUT = 1000 * 5;
 	/** 读取数据超时时间 */
@@ -56,19 +56,25 @@ public class HttpClient4 {
 	 *             错误/异常
 	 */
 	public static String doGet(String url, String charset) throws Exception {
-		if (url == null || "".equals(url = url.trim()))
+		if (url == null || "".equals(url = url.trim())) {
 			throw new IllegalArgumentException("请求地址不能为空！");
-		if (charset != null && !Charset.isSupported(charset))
+		}
+		if (charset != null && !Charset.isSupported(charset)) {
 			throw new IllegalArgumentException("不支持的字符编码集：" + charset);
+		}
 
 		long beginTime = 0;
-		CloseableHttpClient client = getClientInstance(url);// HttpClient实例
+		// HttpClient实例
+		CloseableHttpClient client = getClientInstance(url);
 		CloseableHttpResponse response = null;
 		try {
 			log.info("地址：" + url);
-			HttpGet get = new HttpGet(url);// GET方法实例
-			setTimeout(get, CONNECT_TIMEOUT, SOCKET_TIMEOUT);// 设置超时时间
-			customRequestHeader(get);// 定制请求头
+			// GET方法实例
+			HttpGet get = new HttpGet(url);
+			// 设置超时时间
+			setTimeout(get, CONNECT_TIMEOUT, SOCKET_TIMEOUT);
+			// 定制请求头
+			customRequestHeader(get);
 
 			beginTime = System.nanoTime();
 			response = client.execute(get);
@@ -89,22 +95,24 @@ public class HttpClient4 {
 				return null;
 			}
 
-			String result = null;
+			String result;
 			long len = entity.getContentLength();
-			if (len != -1 && len < 2048) {/* 当返回值长度较小的时候，使用工具类 */
+			if (len != -1 && len < 2048) {
+				/* 当返回值长度较小的时候，使用工具类 */
 				if (charset == null) {
 					result = EntityUtils.toString(entity);
 				} else {
 					result = EntityUtils.toString(entity, charset);
 				}
-			} else {/* 否则使用IO流来读取 */
+			} else {
+				/* 否则使用IO流来读取 */
 				BufferedReader reader;
 				if (charset == null) {
 					reader = new BufferedReader(new InputStreamReader(entity.getContent()));
 				} else {
 					reader = new BufferedReader(new InputStreamReader(entity.getContent(), charset));
 				}
-				StringBuffer sb = new StringBuffer();
+				StringBuilder sb = new StringBuilder();
 				String line;
 				while ((line = reader.readLine()) != null) {
 					sb.append(line);
@@ -140,13 +148,16 @@ public class HttpClient4 {
 	 *             错误/异常
 	 */
 	public static String doPost(String url, Object parameter, String charset) throws Exception {
-		if (url == null || "".equals(url = url.trim()))
+		if (url == null || "".equals(url = url.trim())) {
 			throw new IllegalArgumentException("请求地址不能为空！");
-		if (charset != null && !Charset.isSupported(charset))
+		}
+		if (charset != null && !Charset.isSupported(charset)) {
 			throw new IllegalArgumentException("不支持的字符编码集：" + charset);
+		}
 
 		HttpEntity entity = null;
-		if (parameter != null) {/* 处理参数 */
+		if (parameter != null) {
+			/* 处理参数 */
 			try {
 				entity = parameterHandle(parameter, charset);
 			} catch (Exception e) {
@@ -155,16 +166,21 @@ public class HttpClient4 {
 		}
 
 		long beginTime = 0;
-		CloseableHttpClient client = getClientInstance(url);// HttpClient实例
+		// HttpClient实例
+		CloseableHttpClient client = getClientInstance(url);
 		CloseableHttpResponse response = null;
 		try {
 			log.info("地址：" + url);
-			HttpPost post = new HttpPost(url);// POST方法实例
-			setTimeout(post, CONNECT_TIMEOUT, SOCKET_TIMEOUT);// 设置超时时间
-			customRequestHeader(post);// 定制请求头
+			// POST方法实例
+			HttpPost post = new HttpPost(url);
+			// 设置超时时间
+			setTimeout(post, CONNECT_TIMEOUT, SOCKET_TIMEOUT);
+			// 定制请求头
+			customRequestHeader(post);
 
 			if (entity != null) {
-				post.setEntity(entity);// 设置参数
+				// 设置参数
+				post.setEntity(entity);
 				log.info("参数：" + EntityUtils.toString(entity));
 			}
 
@@ -190,7 +206,8 @@ public class HttpClient4 {
 
 			String result = null;
 			long len = entity.getContentLength();
-			if (len != -1 && len < 2048) {/* 当返回值长度较小的时候，使用工具类 */
+			if (len != -1 && len < 2048) {
+				/* 当返回值长度较小的时候，使用工具类 */
 				if (charset == null) {
 					result = EntityUtils.toString(entity);
 				} else {
@@ -266,6 +283,7 @@ public class HttpClient4 {
 		try {
 			/* 未载入本地SSL证书，不安全 */
 			SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+				@Override
 				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 					return true;/* 未进行客户认证，信任所有 */
 				}
@@ -337,10 +355,12 @@ public class HttpClient4 {
 	 */
 	@SuppressWarnings("unchecked")
 	private static HttpEntity parameterHandle(Object parameter, String charset) throws Exception {
-		if (parameter == null)
+		if (parameter == null) {
 			return null;
-		if (charset != null && !Charset.isSupported(charset))
+		}
+		if (charset != null && !Charset.isSupported(charset)) {
 			throw new Exception("不支持的字符编码集：" + charset);
+		}
 
 		if (parameter instanceof String) {
 			return charset == null ? new StringEntity((String) parameter)
@@ -352,14 +372,15 @@ public class HttpClient4 {
 			List<?> temp = (List<?>) parameter;
 			if (!temp.isEmpty()) {
 				Object o = temp.get(0);
-				if (o instanceof NameValuePair)
+				if (o instanceof NameValuePair) {
 					list = (List<NameValuePair>) parameter;
-				else
+				} else {
 					throw new Exception("不支持的参数类型：List<" + o.getClass().getCanonicalName() + ">");
+				}
 			}
 		} else if (parameter instanceof Map) {
 			Map<String, Object> map = (Map<String, Object>) parameter;
-			list = new ArrayList<NameValuePair>();
+			list = new ArrayList<>();
 			for (Entry<String, Object> en : map.entrySet()) {
 				list.add(new BasicNameValuePair(en.getKey(), String.valueOf(en.getValue())));
 			}
@@ -367,15 +388,16 @@ public class HttpClient4 {
 			throw new Exception("不支持的参数类型：" + parameter.getClass().getCanonicalName());
 		}
 
-		if (list == null || list.isEmpty())
+		if (list == null || list.isEmpty()) {
 			return null;
+		}
 
 		return charset == null ? new UrlEncodedFormEntity(list) : new UrlEncodedFormEntity(list, charset);
 	}
 
 	public static void main(String[] args) {
-		String url = null, result = null, charset = "UTF-8";
-		Object parameter = null;
+		String url, result, charset = "UTF-8";
+		Object parameter;
 		try {
 			url = "";
 			parameter = "";

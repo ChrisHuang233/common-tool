@@ -1,6 +1,7 @@
 package com.huangwei.util;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -169,7 +170,7 @@ public class ByteUtil {
 			throw new IllegalArgumentException("数组不能为空！");
 		}
 
-		int length = b.length > 8 ? 8 : b.length;// long最多8个字节
+		int length = Math.min(b.length, 8);// long最多8个字节
 		long n = 0;
 		for (int i = 0; i < length; i++) {
 			n += ((long) (b[i] & 0xFF)) << (8 * (length - 1 - i));
@@ -193,7 +194,7 @@ public class ByteUtil {
 			throw new IllegalArgumentException("数组不能为空！");
 		}
 
-		int length = b.length > 8 ? 8 : b.length;// long最多8个字节
+		int length = Math.min(b.length, 8);// long最多8个字节
 		long n = 0;
 		for (int i = 0; i < length; i++) {
 			n += ((long) (b[i] & 0xFF)) << (8 * i);
@@ -433,14 +434,14 @@ public class ByteUtil {
 		StringBuilder sb = new StringBuilder();
 		String hexStr;
 		for (int i = 0; i < b.length; i++) {
+			if (i > 0) {
+				sb.append(separator);
+			}
 			hexStr = Integer.toHexString(b[i] & 0xFF);
 			if (hexStr.length() == 1) {
 				sb.append("0").append(hexStr);
 			} else {
 				sb.append(hexStr);
-			}
-			if (i < b.length - 1) {
-				sb.append(separator);
 			}
 		}
 		return sb.toString().toUpperCase();
@@ -690,7 +691,7 @@ public class ByteUtil {
 			throw new IllegalArgumentException("数组不能为空！");
 		}
 
-		return toStr(b, Charset.forName("ASCII"), '\0');
+		return toStr(b, StandardCharsets.US_ASCII, '\0');
 	}
 
 	/**
@@ -777,7 +778,7 @@ public class ByteUtil {
 			length = b.length - offset;
 		}
 
-		return toStr(b, Charset.forName("ASCII"), offset, length, '\0');
+		return toStr(b, StandardCharsets.US_ASCII, offset, length, '\0');
 	}
 
 	/**
@@ -920,9 +921,9 @@ public class ByteUtil {
 			temp = str.getBytes(Charset.forName(charsetName));
 		}
 		byte[] result = new byte[length];
-		if (temp != null && temp.length > 0) {
+		if (temp.length > 0) {
 			// 因为“'\0'= 0x00”，故结束符不再进行处理
-			System.arraycopy(temp, 0, result, 0, temp.length > length ? length : temp.length);
+			System.arraycopy(temp, 0, result, 0, Math.min(temp.length, length));
 		}
 		return result;
 	}

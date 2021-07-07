@@ -1,4 +1,4 @@
-package com.huangwei;
+package com.huangwei.common;
 
 import java.io.Serializable;
 import java.util.List;

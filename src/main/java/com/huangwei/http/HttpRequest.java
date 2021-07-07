@@ -29,34 +29,36 @@ import org.apache.http.util.EntityUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class HttpRequest {
+	private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
+
 	public interface ResultListener {
-		public void onConnectionPoolTimeoutError();
+		void onConnectionPoolTimeoutError();
 	}
 
-	// 表示请求器是否已经做了初始化工作
+	/** 表示请求器是否已经做了初始化工作 */
 	private boolean hasInit = false;
 
-	// 连接超时时间，默认10秒
+	/** 连接超时时间，默认10秒 */
 	private int socketTimeout = 10000;
 
-	// 传输超时时间，默认30秒
+	/** 传输超时时间，默认30秒 */
 	private int connectTimeout = 30000;
 
-	// 请求器的配置
+	/** 请求器的配置 */
 	private RequestConfig requestConfig;
 
-	// HTTP请求器
+	/** HTTP请求器 */
 	private CloseableHttpClient httpClient;
 
-	//证书地址
-	private String certpath;
-	//证书密码
-	private String password;
+	/** 证书地址 */
+	private final String certpath;
+	/** 证书密码 */
+	private final String password;
 
 	public HttpRequest(String certpath, String password) throws UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException,
 			KeyStoreException, IOException {
@@ -68,13 +70,13 @@ public class HttpRequest {
 	private void init() throws IOException, KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException,
 			KeyManagementException {
 		KeyStore keyStore = KeyStore.getInstance("PKCS12");
-		FileInputStream instream = new FileInputStream(new File(certpath));// 加载本地的证书进行https加密传输
+		// 加载本地的证书进行https加密传输
+		FileInputStream instream = new FileInputStream(new File(certpath));
 		try {
-			keyStore.load(instream, password.toCharArray());// 设置证书密码
-		} catch (CertificateException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			// 设置证书密码
+			keyStore.load(instream, password.toCharArray());
+		} catch (CertificateException | NoSuchAlgorithmException e) {
+			log.error("设置证书密码出错", e);
 		} finally {
 			instream.close();
 		}
@@ -101,11 +103,6 @@ public class HttpRequest {
 	 * @param xmlObj
 	 *            要提交的XML数据对象
 	 * @return API回包的实际数据
-	 * @throws IOException
-	 * @throws KeyStoreException
-	 * @throws UnrecoverableKeyException
-	 * @throws NoSuchAlgorithmException
-	 * @throws KeyManagementException
 	 */
 
 	public String sendPost(String url, Object xmlObj) throws IOException, KeyStoreException, UnrecoverableKeyException,
@@ -123,13 +120,13 @@ public class HttpRequest {
 		XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
 
 		// 将要提交给API的数据对象转换成XML格式数据Post给API
-		String postDataXML = xStreamForRequestPostData.toXML(xmlObj);
+		String postDataXml = xStreamForRequestPostData.toXML(xmlObj);
 
 		log.info("API，POST过去的数据是：");
-		log.info(postDataXML);
+		log.info(postDataXml);
 
 		// 得指明使用UTF-8编码，否则到API服务器XML的中文不能被成功识别
-		StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
+		StringEntity postEntity = new StringEntity(postDataXml, "UTF-8");
 		httpPost.addHeader("Content-Type", "text/xml");
 		httpPost.setEntity(postEntity);
 

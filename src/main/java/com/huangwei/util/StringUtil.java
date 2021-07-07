@@ -2,7 +2,6 @@ package com.huangwei.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,10 +12,6 @@ import java.util.regex.Pattern;
  * 字符串工具类
  */
 public class StringUtil {
-
-	// 默认编码格式
-	public static final String DEFAULT_CHARSET_STRING = "UTF-8";
-	public static final Charset DEFAULT_CHARSET = Charset.forName(DEFAULT_CHARSET_STRING);
 
 	/** 空字符串 */
 	public static final String Empty = "";
@@ -31,10 +26,7 @@ public class StringUtil {
 	 * @return true:空（NULL 或 长度为零） false:非空
 	 */
 	public static boolean isEmpty(String str) {
-		if (str == null || str.length() == 0)
-			return true;
-
-		return false;
+		return str == null || str.length() == 0;
 	}
 
 	/**
@@ -58,10 +50,7 @@ public class StringUtil {
 	 * @return true:空白（NULL 或 长度为零 或 全部由空白字符组成） false:非空白
 	 */
 	public static boolean isBlank(String str) {
-		if (str == null || str.length() == 0 || str.trim().length() == 0)
-			return true;
-
-		return false;
+		return str == null || str.length() == 0 || str.trim().length() == 0;
 	}
 
 	/**
@@ -85,8 +74,9 @@ public class StringUtil {
 	 * @return 原始值 或 默认值
 	 */
 	public static String ifNull(String str, String defaultValue) {
-		if (str == null)
+		if (str == null) {
 			return defaultValue;
+		}
 
 		return str;
 	}
@@ -101,8 +91,9 @@ public class StringUtil {
 	 * @return 原始值 或 默认值
 	 */
 	public static String ifEmpty(String str, String defaultValue) {
-		if (str == null || str.length() == 0)
+		if (str == null || str.length() == 0) {
 			return defaultValue;
+		}
 
 		return str;
 	}
@@ -117,8 +108,9 @@ public class StringUtil {
 	 * @return 原始值 或 默认值
 	 */
 	public static String ifBlank(String str, String defaultValue) {
-		if (str == null || str.length() == 0 || (str = str.trim()).length() == 0)
+		if (str == null || str.length() == 0 || (str = str.trim()).length() == 0) {
 			return defaultValue == null ? null : defaultValue.trim();
+		}
 
 		return str;
 	}
@@ -133,8 +125,9 @@ public class StringUtil {
 	 * @return 过滤后的字符串（不为NULL）
 	 */
 	public static String filter(String str) {
-		if (str == null || "".equals(str = str.trim()))
+		if (str == null || "".equals(str = str.trim())) {
 			return Empty;
+		}
 
 		return str.replaceAll("<|>|'|\"|;|/|%|~|\\^", "");
 	}
@@ -151,10 +144,12 @@ public class StringUtil {
 	 *             长度小于1
 	 */
 	public static String trimAndLimit(String str, int maxLength) {
-		if (maxLength < 1)
+		if (maxLength < 1) {
 			throw new IllegalArgumentException("最大长度不能小于1！");
-		if (str == null || str.length() == 0 || (str = str.trim()).length() == 0)
+		}
+		if (str == null || str.length() == 0 || (str = str.trim()).length() == 0) {
 			return Empty;
+		}
 
 		return str.length() > maxLength ? str.substring(0, maxLength) : str;
 	}
@@ -171,13 +166,16 @@ public class StringUtil {
 	 * @return 处理后的字符串（不为NULL）
 	 */
 	public static String trimStart(String str, String prefix) {
-		if (isEmpty(str))
+		if (isEmpty(str)) {
 			return Empty;
-		if (isEmpty(prefix))
+		}
+		if (isEmpty(prefix)) {
 			return str;
+		}
 
-		if (str.startsWith(prefix))
+		if (str.startsWith(prefix)) {
 			str = str.substring(prefix.length(), str.length());
+		}
 		return str;
 	}
 
@@ -193,13 +191,16 @@ public class StringUtil {
 	 * @return 处理后的字符串（不为NULL）
 	 */
 	public static String trimEnd(String str, String suffix) {
-		if (isEmpty(str))
+		if (isEmpty(str)) {
 			return Empty;
-		if (isEmpty(suffix))
+		}
+		if (isEmpty(suffix)) {
 			return str;
+		}
 
-		if (str.endsWith(suffix))
+		if (str.endsWith(suffix)) {
 			str = str.substring(0, str.length() - suffix.length());
+		}
 		return str;
 	}
 
@@ -215,26 +216,31 @@ public class StringUtil {
 	 * @return 处理后的字符串（不为NULL）
 	 */
 	public static String subStr(String str, String start, String end) {
-		if (isEmpty(str))
+		if (isEmpty(str)) {
 			return Empty;
+		}
 
 		int first = 0, last = str.length(), total = last;
 		if (isNotEmpty(start)) {
 			int i = str.indexOf(start);
-			if (i != -1)
+			if (i != -1) {
 				first = i + start.length();
+			}
 		}
 		if (isNotEmpty(end)) {
 			int i = str.lastIndexOf(end);
-			if (i != -1)
+			if (i != -1) {
 				last = i;
+			}
 		}
-		if (first - last > 0)
+		if (first - last > 0) {
 			last = first;
-		if (first == 0 && last - total == 0)
+		}
+		if (first == 0 && last - total == 0) {
 			return str;
-		else
+		} else {
 			return str.substring(first, last);
+		}
 	}
 
 	/**
@@ -245,19 +251,23 @@ public class StringUtil {
 	 * @return 转义后的字符串
 	 */
 	public static String escapeSpecialWord(String str) {
-		if (isEmpty(str))
+		if (isEmpty(str)) {
 			return str;
+		}
 
 		String[] array = { "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|" };
 		for (String key : array) {
-			if (str.contains("\\" + key))
+			if (str.contains("\\" + key)) {
 				str = str.replace("\\" + key, key);/* 将已转义过的字符还原 */
+			}
 		}
-		if (str.contains("\\"))
+		if (str.contains("\\")) {
 			str = str.replace("\\", "\\\\");/* 转义\ */
+		}
 		for (String key : array) {
-			if (str.contains(key))
+			if (str.contains(key)) {
 				str = str.replace(key, "\\" + key);/* 逐个进行转义替换 */
+			}
 		}
 		return str;
 	}
@@ -276,8 +286,9 @@ public class StringUtil {
 	 * @return null 或 匹配结果
 	 */
 	public static String substring(String str, String start, String end) {
-		if (isEmpty(str) || isEmpty(start) || isEmpty(end))
+		if (isEmpty(str) || isEmpty(start) || isEmpty(end)) {
 			return null;
+		}
 
 		start = escapeSpecialWord(start);
 		end = escapeSpecialWord(end);
@@ -304,8 +315,9 @@ public class StringUtil {
 	 * @return null 或 匹配结果（数组）
 	 */
 	public static String[] subSequence(String str, String start, String end) {
-		if (isEmpty(str) || isEmpty(start) || isEmpty(end))
+		if (isEmpty(str) || isEmpty(start) || isEmpty(end)) {
 			return null;
+		}
 
 		start = escapeSpecialWord(start);
 		end = escapeSpecialWord(end);
@@ -331,28 +343,32 @@ public class StringUtil {
 	 * @return 空数组 或 数组（拆分结果）
 	 */
 	public static String[] toArray(String str, String separator) {
-		if (str == null)
+		if (str == null) {
 			return new String[0];
-		if (str.isEmpty() || separator == null || "".equals(separator))
+		}
+		if (str.isEmpty() || separator == null || "".equals(separator)) {
 			return new String[] { str };
+		}
 
 		/* 特殊间隔符（需要转义）：.*?+^$|\()[]{} */
 		if (".".equals(separator) || "*".equals(separator) || "?".equals(separator) || "+".equals(separator)
 				|| "^".equals(separator) || "$".equals(separator) || "|".equals(separator) || "\\".equals(separator)
 				|| "(".equals(separator) || ")".equals(separator) || "[".equals(separator) || "]".equals(separator)
 				|| "{".equals(separator) || "}".equals(separator)) {
-			return str.split("\\" + separator);
+			return str.split("\\\\" + separator);
 		}
 
 		/* 包围形式的字符串拆分，如：(a)(b)(c)、[a][b][c]、{a}{b}{c} */
 		if ("()".equals(separator) || "[]".equals(separator) || "{}".equals(separator) || "<>".equals(separator)) {
 			String a = separator.substring(0, 1);
 			String b = separator.substring(1);
-			if (str.startsWith(a))
+			if (str.startsWith(a)) {
 				str = str.substring(1);
-			if (str.endsWith(b))
+			}
+			if (str.endsWith(b)) {
 				str = str.substring(0, str.length() - 1);
-			return str.split("\\" + b + "\\" + a);
+			}
+			return str.split("\\\\" + b + "\\\\" + a);
 		}
 
 		return str.split(separator);
@@ -396,12 +412,12 @@ public class StringUtil {
 	 * @return integer
 	 */
 	public static int toInt(String str, int defaultValue) {
-		if (isBlank(str)) {
+		if (str == null || "".equals(str = str.trim())) {
 			return defaultValue;
 		}
 
 		try {
-			return Double.valueOf(str).intValue();
+			return new BigDecimal(str).intValue();
 		} catch (Exception e) {
 			return defaultValue;
 		}
@@ -417,12 +433,12 @@ public class StringUtil {
 	 * @return long
 	 */
 	public static long toLong(String str, long defaultValue) {
-		if (isBlank(str)) {
+		if (str == null || "".equals(str = str.trim())) {
 			return defaultValue;
 		}
 
 		try {
-			return Double.valueOf(str).longValue();
+			return new BigDecimal(str).longValue();
 		} catch (Exception e) {
 			return defaultValue;
 		}
@@ -438,12 +454,12 @@ public class StringUtil {
 	 * @return double
 	 */
 	public static double toDouble(String str, double defaultValue) {
-		if (isBlank(str)) {
+		if (str == null || "".equals(str = str.trim())) {
 			return defaultValue;
 		}
 
 		try {
-			return Double.parseDouble(str);
+			return new BigDecimal(str).doubleValue();
 		} catch (Exception e) {
 			return defaultValue;
 		}
@@ -459,7 +475,7 @@ public class StringUtil {
 	 * @return boolean
 	 */
 	public static boolean toBoolean(String str, boolean defaultValue) {
-		if (isBlank(str)) {
+		if (str == null || "".equals(str = str.trim())) {
 			return defaultValue;
 		}
 
@@ -516,7 +532,7 @@ public class StringUtil {
 
 		String s = n.toString();
 		if (n instanceof Float || n instanceof Double) {
-			s = new BigDecimal(s).toString();
+			s = new BigDecimal(s).toPlainString();
 		}
 		// 去除小数点后无意义的零
 		if (s.indexOf('.') > 0 && s.indexOf('e') < 0 && s.indexOf('E') < 0) {

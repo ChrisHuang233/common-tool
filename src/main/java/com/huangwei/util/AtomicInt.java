@@ -49,8 +49,9 @@ public class AtomicInt {
 		for (;;) {
 			current = this.i.get();
 			next = (current >= Integer.MAX_VALUE ? initialValue : current) + 1;
-			if (this.i.compareAndSet(current, next))
+			if (this.i.compareAndSet(current, next)) {
 				return next;
+			}
 		}
 	}
 
@@ -73,8 +74,9 @@ public class AtomicInt {
 		for (;;) {
 			current = this.i.get();
 			next = (current >= upperBound ? initialValue : current) + 1;
-			if (this.i.compareAndSet(current, next))
+			if (this.i.compareAndSet(current, next)) {
 				return next;
+			}
 		}
 	}
 
@@ -95,8 +97,9 @@ public class AtomicInt {
 		for (;;) {
 			current = this.i.get();
 			next = (current <= 0 ? initialValue : current) - 1;
-			if (this.i.compareAndSet(current, next))
+			if (this.i.compareAndSet(current, next)) {
 				return next;
+			}
 		}
 	}
 
@@ -119,8 +122,9 @@ public class AtomicInt {
 		for (;;) {
 			current = this.i.get();
 			next = (current <= lowerBound ? initialValue : current) - 1;
-			if (this.i.compareAndSet(current, next))
+			if (this.i.compareAndSet(current, next)) {
 				return next;
+			}
 		}
 	}
 

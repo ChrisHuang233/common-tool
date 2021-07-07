@@ -1,11 +1,7 @@
 package com.huangwei.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.util.*;
 
 /**
  * 对象工具
@@ -17,7 +13,7 @@ public final class ObjectUtil {
 	}
 
 	/**
-	 * 对象 -> 字符串
+	 * 对象 -> JSON字符串
 	 * 
 	 * @param obj
 	 *            对象
@@ -32,11 +28,11 @@ public final class ObjectUtil {
 	}
 
 	/**
-	 * 对象 -> 字符串
+	 * 对象 -> JSON字符串
 	 * 
 	 * @param obj
 	 *            对象
-	 * @return null 或 JSON字符串
+	 * @return NULL 或 JSON字符串
 	 */
 	public static String toString(Object obj) {
 		if (obj == null) {
@@ -44,6 +40,35 @@ public final class ObjectUtil {
 		}
 
 		return JsonUtil.toString(obj);
+	}
+
+	/**
+	 * 是否为空<br>
+	 * <br>
+	 * 空的定义：null/空字符串/空集合
+	 * 
+	 * @param obj
+	 *            对象
+	 * @return true:为空 false:非空
+	 */
+	public static boolean isEmpty(Object obj) {
+		if (obj == null) {
+			return true;
+		}
+
+		if (obj instanceof String) {
+			return "".equals(obj);
+		} else if (obj.getClass().isArray()) {
+			return ((Object[]) obj).length < 1;
+		} else if (obj instanceof Dictionary) {
+			return ((Dictionary<?, ?>) obj).size() < 1;
+		} else if (obj instanceof Map) {
+			return ((Map<?, ?>) obj).size() < 1;
+		} else if (obj instanceof Collection) {
+			return ((Collection<?>) obj).size() < 1;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -72,13 +97,61 @@ public final class ObjectUtil {
 	}
 
 	/**
+	 * 计算Map/Set不扩容初始容量
+	 * 
+	 * @param expectedSize
+	 *            期望大小（不能为空，不能为负数）
+	 * @return 不扩容初始容量
+	 */
+	public static int mapCapacity(Integer expectedSize) {
+		if (expectedSize == null || expectedSize < 1) {
+			expectedSize = 1;
+		}
+		if (expectedSize < 3) {
+			return expectedSize + 1;
+		}
+		if (expectedSize < 1073741824) {
+			// This is the calculation used in JDK8 to resize when a putAll happens;
+			// It seems to be the most conservative calculation we can make.
+			// 0.75 is the default load factor.
+			return (int) ((float) expectedSize / 0.75F + 1.0F);
+		}
+		return Integer.MAX_VALUE;// any large value
+	}
+
+	/**
+	 * 合并列表
+	 * 
+	 * @param a
+	 *            列表A
+	 * @param b
+	 *            列表B
+	 * @return NULL 或 (合并后的)列表
+	 */
+	public static <T> List<T> mergeList(final List<T> a, final List<T> b) {
+		int n = (a == null ? 0 : a.size()) + (b == null ? 0 : b.size());
+		if (n < 1) {
+			return null;
+		}
+
+		List<T> list = new ArrayList<T>(n);
+		if (a != null && !a.isEmpty()) {
+			list.addAll(a);
+		}
+		if (b != null && !b.isEmpty()) {
+			list.addAll(b);
+		}
+		return list;
+	}
+
+	/**
 	 * 深度克隆/深层复制
 	 * 
 	 * @param <T>
 	 *            泛型（对象类型）
 	 * @param src
 	 *            源对象（不能为空）
-	 * @return null(参数为空) 或 对象副本
+	 * @return NULL(参数为空) 或 对象副本
 	 * @throws RuntimeException
 	 *             IOException 或 ClassNotFoundException
 	 */

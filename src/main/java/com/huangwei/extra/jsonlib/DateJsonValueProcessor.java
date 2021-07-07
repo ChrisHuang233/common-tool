@@ -1,9 +1,9 @@
-package com.huangwei.util;
-
-import java.text.SimpleDateFormat;
+package com.huangwei.extra.jsonlib;
 
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
+
+import java.text.SimpleDateFormat;
 
 /**
  * JSON工具 - JavaBean日期字段 -> 日期字符串<br>
@@ -69,12 +69,11 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
 		if (datePattern != null) {
 			return new SimpleDateFormat(datePattern).format((java.util.Date) value);
 		}
-
 		// 注意：在判断父子级类型时要先判断子类型再判断父类型
 		if (value instanceof java.sql.Date) {
 			return new SimpleDateFormat(PTN_HALF).format((java.util.Date) value);
 		}
-		if (value instanceof java.util.Date) {
+		if (value instanceof java.sql.Timestamp || value instanceof java.util.Date) {
 			return new SimpleDateFormat(PTN_FULL).format((java.util.Date) value);
 		}
 		return value.toString();

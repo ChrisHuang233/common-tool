@@ -1,27 +1,22 @@
 package com.huangwei.util;
 
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * Excel工具类
  */
-@Slf4j
 public class ExcelUtil {
+	protected static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
 	/**
 	 * Excel导出
@@ -74,28 +69,34 @@ public class ExcelUtil {
 			filename += ".xlsx";
 		}
 
-		log.debug("[Excel导出]Begin...filename:{} currentTime:{}", filename, System.currentTimeMillis());
+		logger.debug("[Excel导出]Begin...filename:{} currentTime:{}", filename, System.currentTimeMillis());
 		OutputStream output = null;
 		try {
-			response.setContentType("text/html;charset=UTF-8");
+			// 设置响应头
 			response.reset();
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Access-Control-Allow-Credentials", "true");
+			response.setHeader("Access-Control-Allow-Headers",
+					"Accept, Accept-Language, Content-Language, Content-Type, Origin");
+			response.setHeader("Access-Control-Allow-Origin", StringUtil.ifEmpty(request.getHeader("Origin"), "*"));
+			response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 //			response.setContentType("application/octet-stream");// 二进制流（通用）
 //			response.setContentType("application/x-xls; charset=UTF-8");// Excel
 			response.setContentType("application/vnd.ms-excel; charset=UTF-8");// Excel
 			// 以附件的形式下载，并提供一个默认文件名
-			response.setHeader("Content-Disposition", encodeFilename(request, filename));
-
+			response.setHeader("Content-Disposition", encodeFilename(filename));
+			// 输出数据
 			output = response.getOutputStream();
 			excel.write(output);
 			output.flush();
 		} catch (Exception e) {
-			log.error("[Excel导出]出错！filename:{}", filename, e);
+			logger.error("[Excel导出]出错！filename:{}", filename, e);
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
 				} catch (Exception e) {
-					log.error("[Excel导出]关闭输出流出错！filename:{}", filename, e);
+					logger.error("[Excel导出]关闭输出流出错！filename:{}", filename, e);
 				}
 			}
 			if (excel != null) {
@@ -103,7 +104,7 @@ public class ExcelUtil {
 				excel = null;
 			}
 		}
-		log.debug("[Excel导出]End...filename:{} currentTime:{}", filename, System.currentTimeMillis());
+		logger.debug("[Excel导出]End...filename:{} currentTime:{}", filename, System.currentTimeMillis());
 	}
 
 	/**
@@ -158,37 +159,37 @@ public class ExcelUtil {
 			sheetName = "Excel_" + System.currentTimeMillis();
 		}
 
-		log.debug("[Excel导出]Begin...sheetName:{} title:{} currentTime:{}", sheetName, title,
+		logger.debug("[Excel导出]Begin...sheetName:{} title:{} currentTime:{}", sheetName, title,
 				System.currentTimeMillis());
+		// Excel工作薄
 		SXSSFWorkbook excel = new SXSSFWorkbook(
-				(columnValues == null || columnValues.isEmpty()) ? SXSSFWorkbook.DEFAULT_WINDOW_SIZE
-						: (columnValues.size() / 100 < SXSSFWorkbook.DEFAULT_WINDOW_SIZE
-								? SXSSFWorkbook.DEFAULT_WINDOW_SIZE
-								: columnValues.size() / 100));
-		Sheet sheet = excel.createSheet(sheetName);
+				Math.max(columnValues == null ? 0 : (columnValues.size() / 100), SXSSFWorkbook.DEFAULT_WINDOW_SIZE));
+		Sheet sheet = excel.createSheet(sheetName);// 工作表
 		sheet.setDefaultColumnWidth(20);
 		sheet.setDefaultRowHeight((short) 500);// 行高
 		int rowCount = 0;// 行计数器
+		int maxColumnNumber = 0;// 最大列数
 		Row titleRow = null;// 标题
-		if (title != null && "".equals(title = title.trim())) {
+		if (title != null && !"".equals(title = title.trim())) {
+			// 标题样式
+			CellStyle titleStyle = excel.createCellStyle();
+			titleStyle.setAlignment(HorizontalAlignment.CENTER);// 水平居中
+			// 标题
 			titleRow = sheet.createRow(rowCount++);
-			titleRow.createCell(0).setCellValue(new XSSFRichTextString(title));// 标题
+			Cell titleCell = titleRow.createCell(0);
+			titleCell.setCellValue(new XSSFRichTextString(title));
+			titleCell.setCellStyle(titleStyle);
 		}
-		if (columnNames != null && columnNames.length > 0) {
+		if (columnNames != null && columnNames.length > 0) {// 表头不为空
+			maxColumnNumber = Math.max(maxColumnNumber, columnNames.length);
 			Row headerRow = sheet.createRow(rowCount++);// 表头
 			Cell cell;
 			for (int i = 0; i < columnNames.length; i++) {
-				if (titleRow != null && i > 0) {
-					titleRow.createCell(i);
-				}
 				cell = headerRow.createCell(i);
 				cell.setCellValue(new XSSFRichTextString(columnNames[i]));
 			}
-			if (titleRow != null && columnNames.length > 1) {
-				sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, columnNames.length - 1));// 合并单元格
-			}
 		}
-		if (columnValues != null && !columnValues.isEmpty()) {
+		if (columnValues != null && !columnValues.isEmpty()) {// 数据不为空
 			Row row;
 			Cell cell;
 			for (String[] values : columnValues) {
@@ -196,6 +197,7 @@ public class ExcelUtil {
 					continue;
 				}
 
+				maxColumnNumber = Math.max(maxColumnNumber, values.length);
 				row = sheet.createRow(rowCount++);
 				for (int j = 0; j < values.length; j++) {
 					cell = row.createCell(j);
@@ -203,8 +205,13 @@ public class ExcelUtil {
 				}
 			}
 		}
+		// 扩大标题列跨度
+		if (titleRow != null && maxColumnNumber > 1) {
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, maxColumnNumber - 1));// 合并单元格
+		}
+		// 导出
 		export(request, response, excel, sheetName);
-		log.debug("[Excel导出]End...sheetName:{} title:{} currentTime:{}", sheetName, title,
+		logger.debug("[Excel导出]End...sheetName:{} title:{} currentTime:{}", sheetName, title,
 				System.currentTimeMillis());
 	}
 
@@ -222,57 +229,8 @@ public class ExcelUtil {
 			throw new IllegalArgumentException("文件名不能为空！");
 		}
 
-		String encodedName = null;
-		try {
-			// 空格经URLEncoder转换后会变成"+"(加号)，需要替换为"%20"
-			encodedName = URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
-		} catch (UnsupportedEncodingException e) {// 正常情况下不会出错
-			log.error("文件名编码出错！filename:" + filename, e);
-			encodedName = filename;
-		}
-
+		String encodedName = JavaScriptUtil.encodeUri(filename);
 		return "attachment; filename=\"" + encodedName + "\"; filename*=UTF-8''" + encodedName;
-	}
-
-	/**
-	 * 文件名编码（解决HTTP头编码问题(Content-Disposition)）<br>
-	 * <br>
-	 * 注意：如果有浏览器不支持或不兼容，请尝试使用 {@link #encodeFilename(String)}。
-	 * 
-	 * @param request
-	 *            HTTP请求（可以为空）
-	 * @param filename
-	 *            文件名（不能为空；必须带有后缀名）
-	 * @return Content-Disposition的值
-	 * @throws IllegalArgumentException
-	 *             文件名为空
-	 */
-	public static String encodeFilename(HttpServletRequest request, String filename) {
-		if (filename == null || "".equals(filename = filename.trim())) {
-			throw new IllegalArgumentException("文件名不能为空！");
-		}
-		if (request == null || request.getHeader("User-Agent") == null) {
-			return encodeFilename(filename);
-		}
-
-		String encodedName = null;
-		try {
-			encodedName = URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
-
-			String userAgent = request.getHeader("User-Agent").toLowerCase();
-			if (userAgent.contains("msie") || userAgent.contains("trident")) {// IE
-				// encodedName = URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
-			} else if (userAgent.contains("mozilla")) {// Firefox, Chrome, ...
-				encodedName = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
-			}
-		} catch (UnsupportedEncodingException e) {// 正常情况下不会出错
-			log.error("文件名编码出错！filename:" + filename, e);
-			if (encodedName == null) {
-				encodedName = filename;
-			}
-		}
-
-		return "attachment; filename=\"" + encodedName + "\"";
 	}
 
 }
