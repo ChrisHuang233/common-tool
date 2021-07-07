@@ -5,7 +5,7 @@
 
 	<groupId>com.huangwei</groupId>
 	<artifactId>common-tools</artifactId>
-	<version>2020.7.20</version>
+	<version>2021.7.7</version>
 	<packaging>jar</packaging>
 
 	<name>common-tools</name>
