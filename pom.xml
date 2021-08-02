@@ -27,7 +27,7 @@
 		<bcprov-jdk16.version>1.60</bcprov-jdk16.version>
 		<httpclient.version>4.5.13</httpclient.version>
 		<com.thoughtworks.xstream.version>1.4.17</com.thoughtworks.xstream.version>
-		<commons-compress.version>1.19</commons-compress.version>
+		<commons-compress.version>1.21</commons-compress.version>
 		<version.commons.io>2.7</version.commons.io>
 		<google.zxing.version>3.4.1</google.zxing.version>
 	</properties>
