@@ -15,7 +15,7 @@ public class ByteUtil {
 	 * byte[] -> integer<br>
 	 * <br>
 	 * byte[]: 高位在前，低位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（长度：1-4）
 	 * @return 整数
@@ -38,7 +38,7 @@ public class ByteUtil {
 	 * byte[] -> integer<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（长度：1-4）
 	 * @return 整数
@@ -61,7 +61,7 @@ public class ByteUtil {
 	 * byte[] -> integer<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后；读取4个字节<br>
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param offset
@@ -80,7 +80,7 @@ public class ByteUtil {
 	 * byte[] -> integer<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param offset
@@ -124,7 +124,7 @@ public class ByteUtil {
 	 * integer -> byte[4]<br>
 	 * <br>
 	 * byte[]: 高位在前，低位在后
-	 * 
+	 *
 	 * @param n
 	 *            整数
 	 * @return byte[4]
@@ -141,7 +141,7 @@ public class ByteUtil {
 	 * integer -> byte[4]<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param n
 	 *            integer
 	 * @return byte[4]
@@ -158,7 +158,7 @@ public class ByteUtil {
 	 * byte[] -> long<br>
 	 * <br>
 	 * byte[]: 高位在前，低位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（长度：1-8）
 	 * @return 整数
@@ -182,7 +182,7 @@ public class ByteUtil {
 	 * byte[] -> long<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（长度：1-8）
 	 * @return 整数
@@ -206,7 +206,7 @@ public class ByteUtil {
 	 * byte[] -> long<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后；读取8个字节<br>
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param offset
@@ -225,7 +225,7 @@ public class ByteUtil {
 	 * byte[] -> long<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param offset
@@ -269,7 +269,7 @@ public class ByteUtil {
 	 * long -> byte[8]<br>
 	 * <br>
 	 * byte[]: 高位在前，低位在后
-	 * 
+	 *
 	 * @param n
 	 *            整数
 	 * @return byte[8]
@@ -286,7 +286,7 @@ public class ByteUtil {
 	 * long -> byte[8]<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param n
 	 *            整数
 	 * @return byte[8]
@@ -303,7 +303,7 @@ public class ByteUtil {
 	 * long -> byte[length]<br>
 	 * <br>
 	 * byte[]: 高位在前，低位在后
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @param length
@@ -327,7 +327,7 @@ public class ByteUtil {
 	 * long -> byte[length]<br>
 	 * <br>
 	 * byte[]: 低位在前，高位在后
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @param length
@@ -351,21 +351,77 @@ public class ByteUtil {
 
 	/**
 	 * 异或运算
-	 * 
-	 * @param a
-	 *            byte数组A（不能为空）
+	 *
 	 * @param b
-	 *            byte数组B（不能为空）
+	 *            字节数组（不能为空）
+	 * @return 异或值（可能为负）
+	 * @throws IllegalArgumentException
+	 *             数组为空
+	 */
+	public static byte xor(byte[] b) {
+		if (b == null || b.length < 1) {
+			throw new IllegalArgumentException("数组不能为空！");
+		}
+
+		return xor(b, 0, b.length);
+	}
+
+	/**
+	 * 异或运算
+	 *
+	 * @param b
+	 *            字节数组（不能为空）
+	 * @param offset
+	 *            偏移量（从0开始）
+	 * @param length
+	 *            长度（大于零）
+	 * @return 异或值（可能为负）
+	 * @throws IllegalArgumentException
+	 *             数组为空 或 长度无效
+	 * @throws ArrayIndexOutOfBoundsException
+	 *             偏移量为负 或 偏移量越界
+	 */
+	public static byte xor(byte[] b, int offset, int length) {
+		if (b == null || b.length < 1) {
+			throw new IllegalArgumentException("数组不能为空！");
+		}
+		if (length < 1) {
+			throw new IllegalArgumentException("长度必须大于零！");
+		}
+		if (offset < 0) {
+			throw new ArrayIndexOutOfBoundsException("偏移量不能为负！");
+		}
+		if (offset + 1 > b.length) {
+			throw new ArrayIndexOutOfBoundsException("偏移量越界！最大值：" + (b.length - 1) + " 当前值：" + offset);
+		}
+		if (offset + length > b.length) {// 修正长度
+			length = b.length - offset;
+		}
+
+		byte xor = 0;// 任何数与0进行异或，结果为它本身
+		for (int i = 0; i < length; i++) {
+			xor ^= b[offset + i];
+		}
+		return xor;
+	}
+
+	/**
+	 * 异或运算
+	 *
+	 * @param a
+	 *            字节数组A（不能为空）
+	 * @param b
+	 *            字节数组B（不能为空）
 	 * @return byte[MAX(a.length, b.length)]
-	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
 	 *             数组为空
 	 */
 	public static byte[] xor(byte[] a, byte[] b) {
 		if (a == null || a.length < 1) {
-			throw new NullPointerException("数组A不能为空！");
+			throw new IllegalArgumentException("数组A不能为空！");
 		}
 		if (b == null || b.length < 1) {
-			throw new NullPointerException("数组B不能为空！");
+			throw new IllegalArgumentException("数组B不能为空！");
 		}
 
 		// 区分长短
@@ -391,7 +447,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> 16进制字符串（无分隔符；长度2N；大写；不带0x）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @return 空字符串（参数错误） 或 16进制字符串
@@ -416,7 +472,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> 16进制字符串（指定分隔符；大写；不带0x）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param separator
@@ -449,7 +505,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> 16进制字符串（无分隔符；长度2N；大写；不带0x）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @param offset
@@ -481,7 +537,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> 16进制字符串（空格分隔；大写；不带0x）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组
 	 * @return 空字符串（参数错误） 或 16进制字符串
@@ -492,7 +548,7 @@ public class ByteUtil {
 
 	/**
 	 * 整数（byte/char/short/int/long） -> 16进制字符串（长度2；大写；不带0x）
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @return 16进制字符串
@@ -507,7 +563,7 @@ public class ByteUtil {
 
 	/**
 	 * 整数（byte/char/short/int/long） -> 16进制字符串（指定长度；大写；不带0x）
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @param length
@@ -539,7 +595,7 @@ public class ByteUtil {
 
 	/**
 	 * 16进制字符串 -> byte[]
-	 * 
+	 *
 	 * @param hex
 	 *            16进制字符串
 	 * @return byte[]
@@ -576,7 +632,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charset
@@ -620,7 +676,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charset
@@ -671,17 +727,12 @@ public class ByteUtil {
 			temp = new byte[length];
 			System.arraycopy(b, offset, temp, 0, temp.length);
 		}
-
-		if (charset == null) {
-			return new String(temp);
-		}
-
-		return new String(temp, charset);
+		return charset == null ? new String(temp) : new String(temp, charset);
 	}
 
 	/**
 	 * byte[] -> String（ASCII编码；以'\0'为结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @return String（不为NULL）
@@ -696,7 +747,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String（指定字符集；以'\0'为结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charsetName
@@ -721,7 +772,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String（指定字符集；指定结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charsetName
@@ -748,7 +799,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String（ASCII编码；以'\0'为结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param offset
@@ -783,7 +834,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String（指定字符集；以'\0'为结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charsetName
@@ -826,7 +877,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> String（指定字符集；指定结束符）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param charsetName
@@ -871,7 +922,7 @@ public class ByteUtil {
 
 	/**
 	 * String -> byte[]（ASCII编码；以'\0'为结束符）
-	 * 
+	 *
 	 * @param str
 	 *            字符串
 	 * @param length
@@ -893,7 +944,7 @@ public class ByteUtil {
 
 	/**
 	 * String -> byte[]（指定字符集；以'\0'为结束符）
-	 * 
+	 *
 	 * @param str
 	 *            字符串
 	 * @param charsetName
@@ -930,7 +981,7 @@ public class ByteUtil {
 
 	/**
 	 * byte -> byte[8]（按bit位拆分）
-	 * 
+	 *
 	 * @param b
 	 *            字节
 	 * @return byte[8]
@@ -945,7 +996,7 @@ public class ByteUtil {
 
 	/**
 	 * 整数 -> 二进制字符串（无分隔符；长度8/16/32/64；不带0b）
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @return 二进制字符串
@@ -972,7 +1023,7 @@ public class ByteUtil {
 
 	/**
 	 * 整数 -> 二进制字符串（无分隔符；指定长度；不带0b）
-	 * 
+	 *
 	 * @param n
 	 *            整数（byte/char/short/int/long）
 	 * @param length
@@ -992,7 +1043,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[4] -> IPv4（点分10进制）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空；长度：4）
 	 * @return IPv4
@@ -1009,7 +1060,7 @@ public class ByteUtil {
 
 	/**
 	 * byte[] -> IPv4（点分10进制）
-	 * 
+	 *
 	 * @param b
 	 *            byte数组（不能为空）
 	 * @param offset
@@ -1035,8 +1086,8 @@ public class ByteUtil {
 					"数组长度不足或偏移量不合理，下标越界！最大值：" + (b.length - 1) + " 目标值：" + (offset + 3));
 		}
 
-		return new StringBuilder().append(b[offset] & 0xFF).append(".").append(b[offset + 1] & 0xFF).append(".")
-				.append(b[offset + 2] & 0xFF).append(".").append(b[offset + 3] & 0xFF).toString();
+		return new StringBuilder().append(b[offset] & 0xFF).append(".").append(b[offset + 1] & 0xFF).append(".").append(
+				b[offset + 2] & 0xFF).append(".").append(b[offset + 3] & 0xFF).toString();
 	}
 
 }

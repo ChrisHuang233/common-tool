@@ -35,7 +35,7 @@ public class CRC16Util {
 
 	/**
 	 * 计算CRC16（直接计算）
-	 * 
+	 *
 	 * @param data
 	 *            数据
 	 * @return CRC值（16位，两个字节）
@@ -63,7 +63,7 @@ public class CRC16Util {
 
 	/**
 	 * 计算CRC16（直接计算）
-	 * 
+	 *
 	 * @param data
 	 *            数据
 	 * @return CRC值（16位，两个字节）
@@ -88,7 +88,7 @@ public class CRC16Util {
 
 	/**
 	 * 计算CRC16（查表法）
-	 * 
+	 *
 	 * @param data
 	 *            数据
 	 * @return CRC值（16位，两个字节）
@@ -109,7 +109,7 @@ public class CRC16Util {
 
 	/**
 	 * 计算CRC16（查表法）
-	 * 
+	 *
 	 * @param data
 	 *            数据（不能为空）
 	 * @param begin

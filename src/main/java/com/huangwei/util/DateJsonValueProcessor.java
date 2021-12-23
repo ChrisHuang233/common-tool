@@ -1,6 +1,8 @@
 package com.huangwei.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
@@ -15,40 +17,43 @@ import net.sf.json.processors.JsonValueProcessor;
  */
 public class DateJsonValueProcessor implements JsonValueProcessor {
 
-	/* ----------------------- Fields ----------------------- */
-
-	/** 日期格式 - 全（年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)） */
-	private static final String PTN_FULL = "yyyy-MM-dd HH:mm:ss";
-	/** 日期格式 - 半（年-月-日(yyyy-MM-dd)） */
-	private static final String PTN_HALF = "yyyy-MM-dd";
-	/** 日期格式 - 指定值 */
-	private String datePattern;
-
-	/* -------------------- Constructors -------------------- */
+	/** 默认日期格式 */
+	private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	/** 日期格式化 */
+	private DateFormat dateFormat;
 
 	/**
-	 * JavaBean日期字段 -> 日期字符串<br>
-	 * <br>
-	 * 默认格式：java.sql.Date -> 年-月-日(yyyy-MM-dd)<br>
-	 * java.sql.Timestamp, java.util.Date -> 年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)
+	 * JavaBean日期字段 -> 日期字符串（默认格式“yyyy-MM-dd HH:mm:ss”）
 	 */
 	public DateJsonValueProcessor() {
 		super();
+
+		dateFormat = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
 	}
 
 	/**
 	 * JavaBean日期字段 -> 日期字符串
-	 * 
+	 *
 	 * @param datePattern
-	 *            日期格式（为空：默认格式）
+	 *            日期格式（为空：默认格式“yyyy-MM-dd HH:mm:ss”）
 	 */
 	public DateJsonValueProcessor(String datePattern) {
 		super();
 
-		this.datePattern = (datePattern == null || "".equals(datePattern.trim())) ? null : datePattern;
+		if (datePattern == null || (datePattern = datePattern.trim()).isEmpty()) {
+			datePattern = DEFAULT_DATE_PATTERN;
+		}
+		try {
+			dateFormat = new SimpleDateFormat(datePattern);
+		} catch (Exception e) {
+			dateFormat = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
+		}
 	}
 
-	/* ----------------------- Methods ----------------------- */
+	/** 转换 */
+	private Object process(Object value) {
+		return (!(value instanceof Date)) ? "" : dateFormat.format((Date) value);
+	}
 
 	@Override
 	public Object processArrayValue(Object value, JsonConfig jsonConfig) {
@@ -58,26 +63,6 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
 	@Override
 	public Object processObjectValue(String key, Object value, JsonConfig jsonConfig) {
 		return process(value);
-	}
-
-	/** 转换 */
-	private Object process(Object value) {
-		if (value == null) {
-			return "";
-		}
-
-		if (datePattern != null) {
-			return new SimpleDateFormat(datePattern).format((java.util.Date) value);
-		}
-
-		// 注意：在判断父子级类型时要先判断子类型再判断父类型
-		if (value instanceof java.sql.Date) {
-			return new SimpleDateFormat(PTN_HALF).format((java.util.Date) value);
-		}
-		if (value instanceof java.util.Date) {
-			return new SimpleDateFormat(PTN_FULL).format((java.util.Date) value);
-		}
-		return value.toString();
 	}
 
 }

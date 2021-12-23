@@ -10,15 +10,18 @@ import java.nio.file.Paths;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 压缩工具
  */
 public class CompressUtils {
+	private static final Logger logger = LoggerFactory.getLogger(CompressUtils.class);
 
 	/**
 	 * 创建压缩包
-	 * 
+	 *
 	 * @param target
 	 *            压缩目标（不能为空）
 	 * @param zipFile
@@ -27,19 +30,16 @@ public class CompressUtils {
 	 *             异常
 	 */
 	public static void createZip(Path target, Path zipFile) throws IOException {
-		ZipArchiveOutputStream zipOut = null;
-		try {
-			zipOut = new ZipArchiveOutputStream(new FileOutputStream(zipFile.toFile()));
-
+		try (ZipArchiveOutputStream zipOut = new ZipArchiveOutputStream(new FileOutputStream(zipFile.toFile()));) {
 			addFileToZip(zipOut, target, "");
-		} finally {
-			IOUtils.closeQuietly(zipOut);
+		} catch (Throwable e1) {
+			logger.error("[创建压缩包]压缩包创建异常!", e1);
 		}
 	}
 
 	/**
 	 * 添加文件/目录至压缩包
-	 * 
+	 *
 	 * @param zipOut
 	 *            压缩包输出流
 	 * @param target
@@ -54,13 +54,10 @@ public class CompressUtils {
 		String entryName = pathName + f.getName();
 		zipOut.putArchiveEntry(new ZipArchiveEntry(f, entryName));
 		if (f.isFile()) {
-			FileInputStream in = null;
-			try {
-				in = new FileInputStream(f);
+			try (FileInputStream in = new FileInputStream(f); )  {
 				IOUtils.copy(in, zipOut);
 			} finally {
 				zipOut.closeArchiveEntry();
-				IOUtils.closeQuietly(in);
 			}
 		} else {
 			zipOut.closeArchiveEntry();

@@ -15,7 +15,7 @@ public class Calculator {
 
 	/**
 	 * 加法（A + B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -27,15 +27,15 @@ public class Calculator {
 			return 0D;
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.add(new BigDecimal(b == null ? STRING_ZERO : b.toString())).doubleValue();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).add(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).doubleValue();
 	}
 
 	/**
 	 * 加法（A + B）<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -59,7 +59,7 @@ public class Calculator {
 
 	/**
 	 * 加法（A + B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -67,7 +67,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 和
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -80,14 +80,13 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.add(new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode)
-				.doubleValue();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).add(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode).doubleValue();
 	}
 
 	/**
 	 * 加法（A + B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -99,15 +98,15 @@ public class Calculator {
 			return STRING_ZERO;
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.add(new BigDecimal(b == null ? STRING_ZERO : b.toString())).toPlainString();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).add(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).toPlainString();
 	}
 
 	/**
 	 * 加法（A + B） -> 字符串<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -128,7 +127,7 @@ public class Calculator {
 
 	/**
 	 * 加法（A + B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -136,7 +135,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 和（字符串格式）
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -146,14 +145,13 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.add(new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode)
-				.toPlainString();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).add(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode).toPlainString();
 	}
 
 	/**
 	 * 减法（A - B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -165,15 +163,15 @@ public class Calculator {
 			return 0D;
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.subtract(new BigDecimal(b == null ? STRING_ZERO : b.toString())).doubleValue();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).subtract(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).doubleValue();
 	}
 
 	/**
 	 * 减法（A - B）<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -197,7 +195,7 @@ public class Calculator {
 
 	/**
 	 * 减法（A - B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -205,7 +203,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 差（可能为负）
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -218,14 +216,13 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.subtract(new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode)
-				.doubleValue();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).subtract(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode).doubleValue();
 	}
 
 	/**
 	 * 减法（A - B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -237,15 +234,15 @@ public class Calculator {
 			return STRING_ZERO;
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.subtract(new BigDecimal(b == null ? STRING_ZERO : b.toString())).toPlainString();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).subtract(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).toPlainString();
 	}
 
 	/**
 	 * 减法（A - B） -> 字符串<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -266,7 +263,7 @@ public class Calculator {
 
 	/**
 	 * 减法（A - B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -274,7 +271,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 差（可能为负）（字符串格式）
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -284,14 +281,13 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a == null ? STRING_ZERO : a.toString())
-				.subtract(new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode)
-				.toPlainString();
+		return new BigDecimal(a == null ? STRING_ZERO : a.toString()).subtract(
+				new BigDecimal(b == null ? STRING_ZERO : b.toString())).setScale(scale, roundingMode).toPlainString();
 	}
 
 	/**
 	 * 乘法（A × B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -315,7 +311,7 @@ public class Calculator {
 	 * 乘法（A × B）<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -344,7 +340,7 @@ public class Calculator {
 
 	/**
 	 * 乘法（A × B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -352,7 +348,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 积
 	 * @throws NullPointerException
 	 *             参数为空
@@ -370,13 +366,13 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a.toString()).multiply(new BigDecimal(b.toString())).setScale(scale, roundingMode)
-				.doubleValue();
+		return new BigDecimal(a.toString()).multiply(new BigDecimal(b.toString())).setScale(scale,
+				roundingMode).doubleValue();
 	}
 
 	/**
 	 * 乘法（A × B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -400,7 +396,7 @@ public class Calculator {
 	 * 乘法（A × B） -> 字符串<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -429,7 +425,7 @@ public class Calculator {
 
 	/**
 	 * 乘法（A × B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A
 	 * @param b
@@ -437,7 +433,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 积（字符串格式）
 	 * @throws NullPointerException
 	 *             参数为空
@@ -455,15 +451,15 @@ public class Calculator {
 			throw new IllegalArgumentException("精度错误，其值必须大于等于零！scale:" + scale);
 		}
 
-		return new BigDecimal(a.toString()).multiply(new BigDecimal(b.toString())).setScale(scale, roundingMode)
-				.toPlainString();
+		return new BigDecimal(a.toString()).multiply(new BigDecimal(b.toString())).setScale(scale,
+				roundingMode).toPlainString();
 	}
 
 	/**
 	 * 除法（A ÷ B）<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A（不能为空）
 	 * @param b
@@ -492,7 +488,7 @@ public class Calculator {
 
 	/**
 	 * 除法（A ÷ B）
-	 * 
+	 *
 	 * @param a
 	 *            数据A（不能为空）
 	 * @param b
@@ -500,7 +496,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 商
 	 * @throws NullPointerException
 	 *             参数为空
@@ -525,7 +521,7 @@ public class Calculator {
 	 * 除法（A ÷ B） -> 字符串<br>
 	 * <br>
 	 * 舍入方式：四舍五入
-	 * 
+	 *
 	 * @param a
 	 *            数据A（不能为空）
 	 * @param b
@@ -555,7 +551,7 @@ public class Calculator {
 
 	/**
 	 * 除法（A ÷ B） -> 字符串
-	 * 
+	 *
 	 * @param a
 	 *            数据A（不能为空）
 	 * @param b
@@ -563,7 +559,7 @@ public class Calculator {
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 商（字符串格式）
 	 * @throws NullPointerException
 	 *             参数为空
@@ -587,7 +583,7 @@ public class Calculator {
 
 	/**
 	 * 四舍五入
-	 * 
+	 *
 	 * @param n
 	 *            数据
 	 * @param scale
@@ -609,13 +605,13 @@ public class Calculator {
 
 	/**
 	 * 舍入
-	 * 
+	 *
 	 * @param n
 	 *            数据
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 舍入后的数据
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -633,7 +629,7 @@ public class Calculator {
 
 	/**
 	 * 四舍五入 -> 字符串
-	 * 
+	 *
 	 * @param n
 	 *            数据
 	 * @param scale
@@ -652,13 +648,13 @@ public class Calculator {
 
 	/**
 	 * 舍入 -> 字符串
-	 * 
+	 *
 	 * @param n
 	 *            数据
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return 舍入后的数据（字符串格式）
 	 * @throws IllegalArgumentException
 	 *             精度错误
@@ -673,7 +669,7 @@ public class Calculator {
 
 	/**
 	 * String/Number -> BigDecimal
-	 * 
+	 *
 	 * @param obj
 	 *            源对象（String/Number）
 	 * @return BigDecimal
@@ -690,13 +686,13 @@ public class Calculator {
 
 	/**
 	 * String/Number -> BigDecimal
-	 * 
+	 *
 	 * @param obj
 	 *            源对象（String/Number）
 	 * @param scale
 	 *            精度（大于等于零）（保留几位小数）
 	 * @param roundingMode
-	 *            舍入模式（参见：{@link RoundingMode}）
+	 *            舍入模式（参见：{@link java.math.RoundingMode}）
 	 * @return BigDecimal
 	 * @throws NumberFormatException
 	 *             存在不能正确转换的字符

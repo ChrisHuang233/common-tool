@@ -22,6 +22,8 @@ public class DateUtil {
 	public static final String PTN_Y_M = "yyyy-MM";
 	/** 日期格式 - 年月（yyyyMM） */
 	public static final String PTN_YM = "yyyyMM";
+	/** 日期格式 - 年（yyyy） */
+	public static final String PTN_Y = "yyyy";
 	/** 日期格式 - 月-日（MM-dd） */
 	public static final String PTN_M_D = "MM-dd";
 	/** 日期格式 - 月日（MMdd） */
@@ -38,20 +40,20 @@ public class DateUtil {
 	public static final String PTN_K_M = "kk:mm";
 	/** 日期格式 - 上午/下午 时:分（aaa HH:mm） */
 	public static final String PTN_AAA_H_M = "aaa HH:mm";
-	/** 日期格式 - 年-月-日 时:分:秒（yyyy-MM-dd HH:mm:ss） */
-	public static final String PTN_Y_M_D_H_M_S = "yyyy-MM-dd HH:mm:ss";
-	/** 日期格式 - 年-月-日 时:分:秒（yyyy-MM-dd kk:mm:ss） */
-	public static final String PTN_Y_M_D_K_M_S = "yyyy-MM-dd kk:mm:ss";
-	/** 日期格式 - 年-月-日 时:分:秒.毫秒（yyyy-MM-dd HH:mm:ss.SSS） */
-	public static final String PTN_Y_M_D_H_M_S_S = "yyyy-MM-dd HH:mm:ss.SSS";
-	/** 日期格式 - 年月日时分秒（yyyyMMddHHmmss） */
-	public static final String PTN_YMDHMS = "yyyyMMddHHmmss";
-	/** 日期格式 - 年月日时分秒毫秒（yyyyMMddHHmmssSSS） */
-	public static final String PTN_YMDHMSS = "yyyyMMddHHmmssSSS";
 	/** 日期格式 - 年-月-日 时:分（yyyy-MM-dd HH:mm） */
 	public static final String PTN_Y_M_D_H_M = "yyyy-MM-dd HH:mm";
 	/** 日期格式 - 年月日时分（yyyyMMddHHmm） */
 	public static final String PTN_YMDHM = "yyyyMMddHHmm";
+	/** 日期格式 - 年-月-日 时:分:秒（yyyy-MM-dd HH:mm:ss） */
+	public static final String PTN_Y_M_D_H_M_S = "yyyy-MM-dd HH:mm:ss";
+	/** 日期格式 - 年-月-日 时:分:秒（yyyy-MM-dd kk:mm:ss） */
+	public static final String PTN_Y_M_D_K_M_S = "yyyy-MM-dd kk:mm:ss";
+	/** 日期格式 - 年月日时分秒（yyyyMMddHHmmss） */
+	public static final String PTN_YMDHMS = "yyyyMMddHHmmss";
+	/** 日期格式 - 年-月-日 时:分:秒.毫秒（yyyy-MM-dd HH:mm:ss.SSS） */
+	public static final String PTN_Y_M_D_H_M_S_S = "yyyy-MM-dd HH:mm:ss.SSS";
+	/** 日期格式 - 年月日时分秒毫秒（yyyyMMddHHmmssSSS） */
+	public static final String PTN_YMDHMSS = "yyyyMMddHHmmssSSS";
 
 	/* ------------------------ 毫秒值 ------------------------ */
 
@@ -123,7 +125,7 @@ public class DateUtil {
 
 	/**
 	 * 当前时间（精度：毫秒）
-	 * 
+	 *
 	 * @return 当前时间
 	 */
 	public static Date time() {
@@ -132,7 +134,7 @@ public class DateUtil {
 
 	/**
 	 * 当前整秒（舍去毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date timeOnSecond() {
@@ -141,7 +143,7 @@ public class DateUtil {
 
 	/**
 	 * 整秒（舍去毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -157,7 +159,7 @@ public class DateUtil {
 
 	/**
 	 * 当前整分（舍去秒和毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date timeOnMinute() {
@@ -166,7 +168,7 @@ public class DateUtil {
 
 	/**
 	 * 整分（舍去秒和毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -183,7 +185,7 @@ public class DateUtil {
 
 	/**
 	 * 当前整点（舍去分、秒和毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date timeOnHour() {
@@ -192,7 +194,7 @@ public class DateUtil {
 
 	/**
 	 * 整点（舍去分、秒和毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -210,7 +212,7 @@ public class DateUtil {
 
 	/**
 	 * 今天零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date timeOnDay() {
@@ -219,7 +221,7 @@ public class DateUtil {
 
 	/**
 	 * 零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -240,7 +242,7 @@ public class DateUtil {
 
 	/**
 	 * 今天的开始/零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date todayBegin() {
@@ -249,7 +251,7 @@ public class DateUtil {
 
 	/**
 	 * 今天的开始/零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date dayBegin() {
@@ -258,7 +260,7 @@ public class DateUtil {
 
 	/**
 	 * 一天的开始/零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -277,7 +279,7 @@ public class DateUtil {
 
 	/**
 	 * 今天的结束（23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date todayEnd() {
@@ -286,7 +288,7 @@ public class DateUtil {
 
 	/**
 	 * 今天的结束（23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date dayEnd() {
@@ -295,7 +297,7 @@ public class DateUtil {
 
 	/**
 	 * 一天的结束（23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -314,7 +316,7 @@ public class DateUtil {
 
 	/**
 	 * 今天的结束（23点59分59秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date dayEndOnSecond() {
@@ -323,7 +325,7 @@ public class DateUtil {
 
 	/**
 	 * 一天的结束（23点59分59秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -342,7 +344,7 @@ public class DateUtil {
 
 	/**
 	 * 明天此时
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextDay() {
@@ -351,7 +353,7 @@ public class DateUtil {
 
 	/**
 	 * 一天后
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -367,7 +369,7 @@ public class DateUtil {
 
 	/**
 	 * 明天的开始/零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextDayBegin() {
@@ -376,7 +378,7 @@ public class DateUtil {
 
 	/**
 	 * 下一天的开始/零点整（0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -396,7 +398,7 @@ public class DateUtil {
 
 	/**
 	 * 明天的结束（23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextDayEnd() {
@@ -405,7 +407,7 @@ public class DateUtil {
 
 	/**
 	 * 下一天的结束（23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -425,7 +427,7 @@ public class DateUtil {
 
 	/**
 	 * 当月月初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date monthBegin() {
@@ -434,7 +436,7 @@ public class DateUtil {
 
 	/**
 	 * 月初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -454,7 +456,7 @@ public class DateUtil {
 
 	/**
 	 * 当月月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date monthEnd() {
@@ -463,7 +465,7 @@ public class DateUtil {
 
 	/**
 	 * 月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -485,7 +487,7 @@ public class DateUtil {
 
 	/**
 	 * 一个月后
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextMonth() {
@@ -494,7 +496,7 @@ public class DateUtil {
 
 	/**
 	 * 一个月后
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -510,7 +512,7 @@ public class DateUtil {
 
 	/**
 	 * 下月初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextMonthBegin() {
@@ -519,7 +521,7 @@ public class DateUtil {
 
 	/**
 	 * 下月初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -540,7 +542,7 @@ public class DateUtil {
 
 	/**
 	 * 下月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextMonthEnd() {
@@ -549,7 +551,7 @@ public class DateUtil {
 
 	/**
 	 * 下月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -571,7 +573,7 @@ public class DateUtil {
 
 	/**
 	 * 当年年初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date yearBegin() {
@@ -580,7 +582,7 @@ public class DateUtil {
 
 	/**
 	 * 年初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -601,7 +603,7 @@ public class DateUtil {
 
 	/**
 	 * 当年年末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date yearEnd() {
@@ -610,7 +612,7 @@ public class DateUtil {
 
 	/**
 	 * 年末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -631,7 +633,7 @@ public class DateUtil {
 
 	/**
 	 * 一年后
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextYear() {
@@ -640,7 +642,7 @@ public class DateUtil {
 
 	/**
 	 * 一年后
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -656,7 +658,7 @@ public class DateUtil {
 
 	/**
 	 * 下年初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextYearBegin() {
@@ -665,7 +667,7 @@ public class DateUtil {
 
 	/**
 	 * 下年初（第一天的0点0分0秒0毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -687,7 +689,7 @@ public class DateUtil {
 
 	/**
 	 * 下月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @return 时间
 	 */
 	public static Date nextYearEnd() {
@@ -696,7 +698,7 @@ public class DateUtil {
 
 	/**
 	 * 下月末（最后一天的23点59分59秒999毫秒）
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @return 新日期
@@ -717,7 +719,7 @@ public class DateUtil {
 
 	/**
 	 * 当前时间（年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
-	 * 
+	 *
 	 * @return 当前时间
 	 */
 	public static String now() {
@@ -726,7 +728,7 @@ public class DateUtil {
 
 	/**
 	 * 当前时间 - 指定格式
-	 * 
+	 *
 	 * @param pattern
 	 *            日期格式（为空：年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
 	 * @return 当前时间
@@ -741,7 +743,7 @@ public class DateUtil {
 
 	/**
 	 * 时间戳（年-月-日 时:分:秒.毫秒(yyyy-MM-dd HH:mm:ss.SSS)）
-	 * 
+	 *
 	 * @return 时间戳
 	 */
 	public static String timestamp() {
@@ -750,7 +752,7 @@ public class DateUtil {
 
 	/**
 	 * 日期格式化（年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
-	 * 
+	 *
 	 * @param date
 	 *            日期（Date对象 或 基准毫秒值(自1970年1月1日0点0分0秒以来的毫秒数)）
 	 * @return 空字符串（日期为空） 或 日期字符串
@@ -765,7 +767,7 @@ public class DateUtil {
 
 	/**
 	 * 日期格式化 - 指定格式
-	 * 
+	 *
 	 * @param date
 	 *            日期（Date对象 或 基准毫秒值(自1970年1月1日0点0分0秒以来的毫秒数)）
 	 * @param pattern
@@ -786,7 +788,7 @@ public class DateUtil {
 
 	/**
 	 * (固定格式)日期字符串 -> 日期
-	 * 
+	 *
 	 * @param dateStr
 	 *            日期字符串（不能为空）（格式：年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
 	 * @return 日期
@@ -806,7 +808,7 @@ public class DateUtil {
 
 	/**
 	 * (固定格式)日期字符串 -> 日期（安静转换，不抛出异常）
-	 * 
+	 *
 	 * @param dateStr
 	 *            日期字符串（格式：年-月-日 时:分:秒(yyyy-MM-dd HH:mm:ss)）
 	 * @return NULL(参数为空或格式不匹配) 或 日期
@@ -826,7 +828,7 @@ public class DateUtil {
 
 	/**
 	 * (指定格式)日期字符串 -> 日期
-	 * 
+	 *
 	 * @param dateStr
 	 *            日期字符串（不能为空）
 	 * @param pattern
@@ -849,7 +851,7 @@ public class DateUtil {
 
 	/**
 	 * (指定格式)日期字符串 -> 日期（安静转换，不抛出异常）
-	 * 
+	 *
 	 * @param dateStr
 	 *            日期字符串（不能为空）
 	 * @param pattern
@@ -872,7 +874,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算
-	 * 
+	 *
 	 * @param date
 	 *            日期（为空：当前时间）
 	 * @param field
@@ -901,9 +903,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 年<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -918,7 +920,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 年
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -940,9 +942,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 月<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -957,7 +959,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 月
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -979,9 +981,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 日<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -996,7 +998,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 日
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -1018,9 +1020,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 小时<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -1035,7 +1037,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 小时
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -1057,9 +1059,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 分钟<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -1074,7 +1076,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 分钟
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -1096,9 +1098,9 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 秒<br>
-	 * 
+	 *
 	 * 以当前时间为基础
-	 * 
+	 *
 	 * @param amount
 	 *            增加（正数）/减小（负数）的数量
 	 * @return 新日期
@@ -1113,7 +1115,7 @@ public class DateUtil {
 
 	/**
 	 * 时间计算 - 秒
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @param amount
@@ -1134,8 +1136,108 @@ public class DateUtil {
 	}
 
 	/**
+	 * 获取当前年份
+	 *
+	 * @return 年份
+	 */
+	public static int getYear() {
+		return getYear(null);
+	}
+
+	/**
+	 * 获取年份
+	 *
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 年份
+	 */
+	public static int getYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+
+		return c.get(Calendar.YEAR);
+	}
+
+	/**
+	 * 获取当前月份
+	 *
+	 * @return 月份（1-12）
+	 */
+	public static int getMonth() {
+		return getMonth(null);
+	}
+
+	/**
+	 * 获取月份
+	 *
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 月份（1-12）
+	 */
+	public static int getMonth(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+
+		return c.get(Calendar.MONTH) + 1;
+	}
+
+	/**
+	 * 获取当前日期序号
+	 *
+	 * @return 日期序号（1-31）
+	 */
+	public static int getDayOfMonth() {
+		return getDayOfMonth(null);
+	}
+
+	/**
+	 * 获取日期序号
+	 *
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 日期序号（1-31）
+	 */
+	public static int getDayOfMonth(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+
+		return c.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * 获取当前星期序号（星期几）
+	 *
+	 * @return 星期序号（1:周一 2:周二 3:周三 4:周四 5:周五 6:周六 7:周日）
+	 */
+	public static int getDayOfWeek() {
+		return getDayOfWeek(null);
+	}
+
+	/**
+	 * 获取星期序号（星期几）
+	 *
+	 * @param date
+	 *            日期（为空：当前时间）
+	 * @return 星期序号（1:周一 2:周二 3:周三 4:周四 5:周五 6:周六 7:周日）
+	 */
+	public static int getDayOfWeek(Date date) {
+		Calendar c = Calendar.getInstance();
+		if (date != null) {
+			c.setTime(date);
+		}
+
+		return 7 - (8 - c.get(Calendar.DAY_OF_WEEK)) % 7;
+	}
+
+	/**
 	 * 时间比较
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1157,9 +1259,9 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 毫秒<br>
-	 * 
+	 *
 	 * 与当前时间的时间差
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
 	 * @return 毫秒数
@@ -1176,7 +1278,7 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 毫秒
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1197,13 +1299,13 @@ public class DateUtil {
 	}
 
 	/**
-	 * 时间差 - 秒<br>
-	 * 
+	 * 时间差 - 秒（只进不舍：不足一秒记为一秒）<br>
+	 *
 	 * 与当前时间的时间差
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
-	 * @return 秒数（不足1秒返回0）
+	 * @return 秒数
 	 * @throws IllegalArgumentException
 	 *             日期为空
 	 */
@@ -1216,35 +1318,35 @@ public class DateUtil {
 	}
 
 	/**
-	 * 时间差 - 秒
-	 * 
+	 * 时间差 - 秒（只进不舍：不足一秒记为一秒）
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
 	 *            日期B（不能为空）
-	 * @return 秒数（不足1秒返回0）
+	 * @return 秒数
 	 * @throws IllegalArgumentException
 	 *             日期为空
 	 */
 	public static long secondDifference(Date a, Date b) {
 		if (a == null && b == null) {
-			return 0;
+			return 0L;
 		}
 		if (a == null || b == null) {
 			throw new IllegalArgumentException("日期" + (a == null ? "A" : "B") + "不能为空！");
 		}
 
-		return Math.abs(a.getTime() - b.getTime()) / 1000L;
+		return Math.abs(a.getTime() - b.getTime() + ONE_SECOND - 1) / ONE_SECOND;
 	}
 
 	/**
-	 * 时间差 - 分钟<br>
-	 * 
+	 * 时间差 - 分钟（只进不舍：不足一分钟记为一分钟）<br>
+	 *
 	 * 与当前时间的时间差
-	 * 
+	 *
 	 * @param date
 	 *            日期（不能为空）
-	 * @return 分钟数（不足1分钟返回0）
+	 * @return 分钟数
 	 * @throws IllegalArgumentException
 	 *             日期为空
 	 */
@@ -1257,30 +1359,30 @@ public class DateUtil {
 	}
 
 	/**
-	 * 时间差 - 分钟
-	 * 
+	 * 时间差 - 分钟（只进不舍：不足一分钟记为一分钟）
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
 	 *            日期B（不能为空）
-	 * @return 分钟数（不足1分钟返回0）
+	 * @return 分钟数
 	 * @throws IllegalArgumentException
 	 *             日期为空
 	 */
 	public static long minuteDifference(Date a, Date b) {
 		if (a == null && b == null) {
-			return 0;
+			return 0L;
 		}
 		if (a == null || b == null) {
 			throw new IllegalArgumentException("日期" + (a == null ? "A" : "B") + "不能为空！");
 		}
 
-		return Math.abs(a.getTime() - b.getTime()) / (1000L * 60);
+		return Math.abs(a.getTime() - b.getTime() + ONE_MINUTE - 1) / (ONE_MINUTE);
 	}
 
 	/**
 	 * 时间差 - 小时
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1291,7 +1393,7 @@ public class DateUtil {
 	 */
 	public static long hourDifference(Date a, Date b) {
 		if (a == null && b == null) {
-			return 0;
+			return 0L;
 		}
 		if (a == null || b == null) {
 			throw new IllegalArgumentException("日期" + (a == null ? "A" : "B") + "不能为空！");
@@ -1302,7 +1404,7 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 天
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1324,7 +1426,7 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 口语化（假设一个月有30天）（最高单位：年；最低单位：秒）
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1392,7 +1494,7 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 口语化（最高单位：天；最低单位：秒）
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1444,7 +1546,7 @@ public class DateUtil {
 
 	/**
 	 * 时间差 - 口语化 - 分钟（最高单位：天；最低单位：分钟）
-	 * 
+	 *
 	 * @param a
 	 *            日期A（不能为空）
 	 * @param b
@@ -1493,7 +1595,7 @@ public class DateUtil {
 
 	/**
 	 * 口语化 - 分钟（最高单位：天；最低单位：分钟）
-	 * 
+	 *
 	 * @param n
 	 *            分钟数（>0）
 	 * @return x天x小时x分钟
