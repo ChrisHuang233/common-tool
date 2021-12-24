@@ -23,7 +23,7 @@ public class GpsUtil {
 
 	/**
 	 * GPS工具
-	 * 
+	 *
 	 * @param longitude
 	 *            地心坐标(WGS-84) - 经度（GPS原始坐标）
 	 * @param latitude
@@ -50,7 +50,7 @@ public class GpsUtil {
 
 	/**
 	 * GPS工具 - 源自“地心坐标(WGS-84)”
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -69,7 +69,7 @@ public class GpsUtil {
 
 	/**
 	 * GPS工具 - 源自“国测局坐标(火星坐标,GCJ-02)”
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -84,7 +84,7 @@ public class GpsUtil {
 
 	/**
 	 * GPS工具 - 源自“百度坐标(BD-09)”
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -99,7 +99,7 @@ public class GpsUtil {
 
 	/**
 	 * 地心坐标(WGS-84) -> 国测局坐标(火星坐标,GCJ-02)
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -127,9 +127,9 @@ public class GpsUtil {
 
 	/**
 	 * 地心坐标(WGS-84) -> 百度坐标(BD-09)<br>
-	 * 
+	 *
 	 * 注意：该方法经过多次计算得到结果，不保证其精确度。
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -147,7 +147,7 @@ public class GpsUtil {
 
 	/**
 	 * 国测局坐标(火星坐标,GCJ-02) -> 地心坐标(WGS-84)
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -164,7 +164,7 @@ public class GpsUtil {
 
 	/**
 	 * 国测局坐标(火星坐标,GCJ-02) -> 百度坐标(BD-09)
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -185,7 +185,7 @@ public class GpsUtil {
 
 	/**
 	 * 百度坐标(BD-09) -> 国测局坐标(火星坐标,GCJ-02)
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -206,9 +206,9 @@ public class GpsUtil {
 
 	/**
 	 * 百度坐标(BD-09) -> 地心坐标(WGS-84)<br>
-	 * 
+	 *
 	 * 注意：该方法经过多次计算得到结果，不保证其精确度。
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -222,7 +222,7 @@ public class GpsUtil {
 
 	/**
 	 * 判断坐标是否在中国之外（地心坐标(WGS-84)）
-	 * 
+	 *
 	 * @param lng
 	 *            经度
 	 * @param lat
@@ -230,11 +230,10 @@ public class GpsUtil {
 	 * @return true:国外 false:国内
 	 */
 	private static boolean outofChina(double lng, double lat) {
-		if (lng < 72.004 || lng > 137.8347)
+		if (lng < 72.004 || lng > 137.8347) {
 			return true;
-		if (lat < 0.8293 || lat > 55.8271)
-			return true;
-		return false;
+		}
+		return lat < 0.8293 || lat > 55.8271;
 	}
 
 	/** 经度转换 */

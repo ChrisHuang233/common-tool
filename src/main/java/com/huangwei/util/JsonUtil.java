@@ -54,7 +54,7 @@ public class JsonUtil {
 
 	/**
 	 * Java对象 -> JSON字符串（支持自定义对象、map、list等）（使用通用JSON配置）
-	 * 
+	 *
 	 * @param bean
 	 *            Java对象（不能为空）
 	 * @return JSON字符串
@@ -76,7 +76,7 @@ public class JsonUtil {
 	 * Java对象 -> JSON字符串（支持自定义对象、map、list等）<br>
 	 * <br>
 	 * 使用定制JSON配置：Integer.null/Long.null -> ""（空字符串）
-	 * 
+	 *
 	 * @param bean
 	 *            Java对象（不能为空）
 	 * @return JSON字符串
@@ -96,7 +96,7 @@ public class JsonUtil {
 
 	/**
 	 * 单一值（使用通用JSON配置）
-	 * 
+	 *
 	 * @param key
 	 *            键（不能为空）
 	 * @param value
@@ -117,7 +117,7 @@ public class JsonUtil {
 
 	/**
 	 * JSON字符串 -> Map&lt;String, Object&gt;
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串
 	 * @return LinkedHashMap&lt;String, Object&gt;（不为NULL）
@@ -147,7 +147,7 @@ public class JsonUtil {
 
 	/**
 	 * JSON字符串 -> Map&lt;String, String&gt;
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串
 	 * @return LinkedHashMap&lt;String, String&gt;（不为NULL）
@@ -178,7 +178,7 @@ public class JsonUtil {
 	 * 属性类型映射<br>
 	 * <br>
 	 * 注意：转换含有复杂类型属性的Java对象时请使用：JSONObject.toBean(jsonObject, class, classMap)
-	 * 
+	 *
 	 * @param key
 	 *            键/属性名（不能为空）
 	 * @param beanClass
@@ -201,7 +201,7 @@ public class JsonUtil {
 	 * JSON字符串 -> Java对象<br>
 	 * <br>
 	 * 注意：仅适用于属性全部为简单类型的Java对象。
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串（不能为空）
 	 * @param beanClass
@@ -223,7 +223,7 @@ public class JsonUtil {
 	 * JSON字符串 -> Java对象<br>
 	 * <br>
 	 * 注意：请为Java对象的复杂类型属性设置正确的属性类型映射。
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串（不能为空）
 	 * @param beanClass

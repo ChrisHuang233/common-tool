@@ -40,7 +40,7 @@ public class QRCodeUtil {
 
 	/**
 	 * 生成二维码
-	 * 
+	 *
 	 * @param content
 	 *            二维码内容
 	 * @param width
@@ -220,7 +220,7 @@ public class QRCodeUtil {
 		// 插入图片
 		Graphics2D graph = source.createGraphics();
 		graph.setColor(Color.WHITE);
-//		graph.fill(new RoundRectangle2D.Float(x, y, width + 4, height + 4, 15, 15));
+		// graph.fill(new RoundRectangle2D.Float(x, y, width + 4, height + 4, 15, 15));
 		graph.drawImage(src, x + 2, y + 2, width, height, null);
 
 		graph.dispose();

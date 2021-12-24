@@ -31,7 +31,7 @@ public class JavaScriptUtil {
 	 * <br>
 	 * 不编码字符（82个）：-_.!~*'();/?:@&=+$,#0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
 	 * 由于该方法对在URI中具有特殊含义的标点符号（;/?:@&=+$,#）不进行转义，故常用于对网址编码（不包含参数）。
-	 * 
+	 *
 	 * @param uri
 	 *            地址（不能为空）
 	 * @return 编码后的URI
@@ -56,7 +56,7 @@ public class JavaScriptUtil {
 	 * <br>
 	 * 不编码字符（71个）：-_.!~*'()0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
 	 * 由于该方法对用于分隔URI各个部分的符号进行转义，故常用于对请求参数进行编码。
-	 * 
+	 *
 	 * @param uri
 	 *            地址（不能为空）
 	 * @return 编码后的URI
@@ -72,7 +72,6 @@ public class JavaScriptUtil {
 		try {
 			return (String) JAVA_SCRIPT_ENGINE.eval("encodeURIComponent('" + uri + "');");
 		} catch (Exception e) {
-			new RuntimeException(e.toString(), e.getCause());
 			throw new RuntimeException(e.getMessage(), e.getCause());
 		}
 	}
@@ -81,7 +80,7 @@ public class JavaScriptUtil {
 	 * URI解码（执行 decodeURI() 函数）<br>
 	 * <br>
 	 * 对 encodeURI() 函数编码过的 URI 进行解码。
-	 * 
+	 *
 	 * @param uri
 	 *            地址（不能为空）
 	 * @return 解码后的URI
@@ -105,7 +104,7 @@ public class JavaScriptUtil {
 	 * URI组件解码（执行 decodeURIComponent() 函数）<br>
 	 * <br>
 	 * 对 encodeURIComponent() 函数编码过的 URI 进行解码。
-	 * 
+	 *
 	 * @param uri
 	 *            地址（不能为空）
 	 * @return 解码后的URI

@@ -1,6 +1,7 @@
 package com.huangwei.util;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -14,7 +15,7 @@ public final class ObjectUtil {
 
 	/**
 	 * 对象 -> JSON字符串
-	 * 
+	 *
 	 * @param obj
 	 *            对象
 	 * @return 空字符串 或 JSON字符串
@@ -29,7 +30,7 @@ public final class ObjectUtil {
 
 	/**
 	 * 对象 -> JSON字符串
-	 * 
+	 *
 	 * @param obj
 	 *            对象
 	 * @return NULL 或 JSON字符串
@@ -46,7 +47,7 @@ public final class ObjectUtil {
 	 * 是否为空<br>
 	 * <br>
 	 * 空的定义：null/空字符串/空集合
-	 * 
+	 *
 	 * @param obj
 	 *            对象
 	 * @return true:为空 false:非空
@@ -56,16 +57,16 @@ public final class ObjectUtil {
 			return true;
 		}
 
-		if (obj instanceof String) {
-			return "".equals(obj);
+		if (obj instanceof CharSequence) {
+			return ((CharSequence) obj).length() == 0;
 		} else if (obj.getClass().isArray()) {
-			return ((Object[]) obj).length < 1;
-		} else if (obj instanceof Dictionary) {
-			return ((Dictionary<?, ?>) obj).size() < 1;
-		} else if (obj instanceof Map) {
-			return ((Map<?, ?>) obj).size() < 1;
-		} else if (obj instanceof Collection) {
-			return ((Collection<?>) obj).size() < 1;
+			return Array.getLength(obj) == 0;
+		} else if (obj instanceof Collection<?>) {
+			return ((Collection<?>) obj).isEmpty();
+		} else if (obj instanceof Map<?, ?>) {
+			return ((Map<?, ?>) obj).isEmpty();
+		} else if (obj instanceof Dictionary<?, ?>) {
+			return ((Dictionary<?, ?>) obj).isEmpty();
 		} else {
 			return false;
 		}
@@ -78,7 +79,7 @@ public final class ObjectUtil {
 	 * ①C#: ??运算符(null合并运算符)<br>
 	 * ②MySQL: IFNULL(expr1, expr2)<br>
 	 * ③SQL Server/MS Access: ISNULL(expr1, expr2)
-	 * 
+	 *
 	 * @param obj
 	 *            对象
 	 * @param nullDefault
@@ -98,7 +99,7 @@ public final class ObjectUtil {
 
 	/**
 	 * 计算Map/Set不扩容初始容量
-	 * 
+	 *
 	 * @param expectedSize
 	 *            期望大小（不能为空，不能为负数）
 	 * @return 不扩容初始容量
@@ -121,7 +122,7 @@ public final class ObjectUtil {
 
 	/**
 	 * 合并列表
-	 * 
+	 *
 	 * @param a
 	 *            列表A
 	 * @param b
@@ -146,7 +147,7 @@ public final class ObjectUtil {
 
 	/**
 	 * 深度克隆/深层复制
-	 * 
+	 *
 	 * @param <T>
 	 *            泛型（对象类型）
 	 * @param src

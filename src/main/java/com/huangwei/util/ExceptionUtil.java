@@ -7,7 +7,7 @@ public class ExceptionUtil {
 
 	/**
 	 * 获取异常详细信息（默认读取2条堆栈信息）
-	 * 
+	 *
 	 * @param e
 	 *            异常
 	 * @return null（参数为空） 或 异常信息
@@ -18,7 +18,7 @@ public class ExceptionUtil {
 
 	/**
 	 * 获取异常详细信息
-	 * 
+	 *
 	 * @param e
 	 *            异常
 	 * @param n
@@ -26,8 +26,9 @@ public class ExceptionUtil {
 	 * @return null（参数为空） 或 异常信息
 	 */
 	public static String detail(Throwable e, Integer n) {
-		if (e == null)
+		if (e == null) {
 			return null;
+		}
 
 		StringBuilder detail = new StringBuilder();
 		detail.append(e.toString()).append(";");
@@ -38,15 +39,16 @@ public class ExceptionUtil {
 			if (stack != null && stack.length > 0) {
 				for (int i = 0; i < stack.length; i++) {
 					detail.append(" at ").append(stack[i]).append(";");
-					if (n > 0 && i + 1 >= n)
+					if (n > 0 && i + 1 >= n) {
 						break;
+					}
 				}
 			}
 		}
 
 		/* 获取原因 */
 		String cause = getCause(e);
-		if (cause != null && cause.length() > 0) {
+		if (cause.length() > 0) {
 			detail.append(getCause(e));
 		}
 
@@ -55,14 +57,15 @@ public class ExceptionUtil {
 
 	/**
 	 * 获取原因
-	 * 
+	 *
 	 * @param t
 	 *            异常
 	 * @return 原因（不为NULL）
 	 */
 	private static String getCause(Throwable t) {
-		if (t == null)
+		if (t == null) {
 			return "";
+		}
 
 		Throwable c = t.getCause();
 		if (c == null) {

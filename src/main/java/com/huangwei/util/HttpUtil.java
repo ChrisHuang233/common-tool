@@ -9,7 +9,7 @@ public class HttpUtil {
 
 	/**
 	 * 是否是JSON请求
-	 * 
+	 *
 	 * @param request
 	 *            HTTP请求（不能为空）
 	 * @return true:是 false:否
@@ -25,7 +25,7 @@ public class HttpUtil {
 
 	/**
 	 * 是否是AJAX请求
-	 * 
+	 *
 	 * @param request
 	 *            HTTP请求（不能为空）
 	 * @return true:是 false:否
@@ -40,7 +40,7 @@ public class HttpUtil {
 
 	/**
 	 * 获取真实IP
-	 * 
+	 *
 	 * @param request
 	 *            HTTP请求（不能为空）
 	 * @return 真实IP（非NULL）

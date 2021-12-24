@@ -1,16 +1,19 @@
 package com.huangwei.util;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * JSON工具类（Jackson实现）
@@ -38,16 +41,13 @@ public class JacksonUtil {
 
 		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		// 单引号处理
-		objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-
+//		// 空值处理
 //		objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
 //			@Override
 //			public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 //				gen.writeString("");
 //			}
 //		});
-
 //		// 美化输出
 //		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 //		// 允许序列化空的POJO类（否则会抛出异常）
@@ -62,14 +62,17 @@ public class JacksonUtil {
 //
 //		// 在JSON中允许C/C++ 样式的注释(非标准，默认禁用)
 //		objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+		// 允许单引号（非标准）
+		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 //		// 允许没有引号的字段名（非标准）
 //		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-//		// 允许单引号（非标准）
-//		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 //		// 强制转义非ASCII字符
 //		objectMapper.configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 //		// 将内容包裹为一个JSON属性，属性名由@JsonRootName注解指定
 //		objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+		// 关闭科学计数
+		objectMapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);
+		objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
 	}
 
 	/**
@@ -81,7 +84,6 @@ public class JacksonUtil {
 	 */
 	public static String toString(Object bean) {
 		if (bean == null) {
-			logger.error("[Java对象 -> JSON字符串]参数错误！bean:" + bean);
 			return null;
 		}
 
@@ -95,7 +97,7 @@ public class JacksonUtil {
 
 	/**
 	 * JSON字符串 -> Java对象
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串（不能为空）
 	 * @param beanClass
@@ -104,7 +106,6 @@ public class JacksonUtil {
 	 */
 	public static <T> T toBean(String jsonStr, Class<T> beanClass) {
 		if (jsonStr == null || beanClass == null) {
-			logger.error("[JSON字符串 -> Java对象]参数错误！jsonStr:" + jsonStr + " beanClass:" + beanClass);
 			return null;
 		}
 
@@ -118,7 +119,7 @@ public class JacksonUtil {
 
 	/**
 	 * JSON字符串 -> Map&lt;String, Object&gt;
-	 * 
+	 *
 	 * @param jsonStr
 	 *            JSON字符串（不能为空）
 	 * @return LinkedHashMap&lt;String, Object&gt;（不为NULL）
