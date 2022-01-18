@@ -1,18 +1,18 @@
 package com.huangwei.util;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Security;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+import com.huangwei.crypto.AESUtil;
 import com.huangwei.crypto.Base64Util;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.Security;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 加密工具类
@@ -199,7 +199,8 @@ public class SecretUtil {
 	/**
 	 * AES密钥生成器
 	 *
-	 * @param length 密钥长度 (单位:bit)
+	 * @param length
+	 *            密钥长度 (单位:bit)
 	 * @return 生成的密钥
 	 */
 	public static String keygen(Integer length) {
@@ -219,4 +220,21 @@ public class SecretUtil {
 		return keygen.substring(0, length);
 	}
 
+	public static void main(String[] args) {
+		// TimeSerialNumber sn = TimeSerialNumber.instance("",TimeSerialNumber.P_YMDHMS,2);
+		// System.out.println(sn.sn());
+		// String key = keygen(256);
+		// System.out.println(key);
+		// System.out.println(key.length());2021121715193301
+		// System.out.println("Y#afy4vHv{O+yI7ImsKUyoPOicOIz/7E".length());
+		// String key = "Y#afy4vHv{O+yI7ImsKUyoPOicOIz/7E";
+		String key = "RsuHw4fCrsq0Ucizyq7OgsuDzJrPh8au";
+		Map<String, Object> map = new HashMap<>();
+		map.put("time", System.currentTimeMillis());
+		map.put("phoneNumber", "13638423385");
+		map.put("userName", "黄炜");
+		String json = JsonUtil.toStr(map);
+		String data = AESUtil.ecbEncryptHex(json, key);
+		System.out.println(data);
+	}
 }

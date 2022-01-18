@@ -2,9 +2,7 @@ package com.huangwei.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +13,8 @@ public class StringUtil {
 
 	/** 空字符串 */
 	public static final String Empty = "";
+	/** 英文逗号 */
+	public static final String COMMA = ",";
 
 	/**
 	 * 是否为空字符串<br>
@@ -129,7 +129,7 @@ public class StringUtil {
 			return Empty;
 		}
 
-		return str.replaceAll("<|>|'|\"|;|/|%|~|\\^", "");
+		return str.replaceAll("[<>'\";/%~^]", "");
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class StringUtil {
 		}
 
 		if (str.startsWith(prefix)) {
-			str = str.substring(prefix.length(), str.length());
+			str = str.substring(prefix.length());
 		}
 		return str;
 	}
@@ -202,6 +202,246 @@ public class StringUtil {
 			str = str.substring(0, str.length() - suffix.length());
 		}
 		return str;
+	}
+
+	/**
+	 * 连接字符串
+	 * 
+	 * @param a
+	 *            字符串A
+	 * @param b
+	 *            字符串B
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(String a, String b) {
+		if (a == null && b == null) {
+			return Empty;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if (a != null) {
+			sb.append(a);
+		}
+		if (b != null) {
+			sb.append(b);
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接字符串
+	 * 
+	 * @param strings
+	 *            字符串列表
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(String... strings) {
+		if (strings == null || strings.length < 1) {
+			return Empty;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (String s : strings) {
+			if (s != null) {
+				sb.append(s);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接数组元素 - int数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @param separator
+	 *            分隔符（为空：无分隔）
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(int[] array, String separator) {
+		if (array == null || array.length < 1) {
+			return Empty;
+		}
+		boolean separatorEmpty = false;
+		if (separator == null || separator.length() < 1) {
+			separatorEmpty = true;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0, iMax = array.length - 1; i <= iMax; i++) {
+			sb.append(array[i]);
+			if (!separatorEmpty && i < iMax) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接数组元素 - long数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @param separator
+	 *            分隔符（为空：无分隔）
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(long[] array, String separator) {
+		if (array == null || array.length < 1) {
+			return Empty;
+		}
+		boolean separatorEmpty = false;
+		if (separator == null || separator.length() < 1) {
+			separatorEmpty = true;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0, iMax = array.length - 1; i <= iMax; i++) {
+			sb.append(array[i]);
+			if (!separatorEmpty && i < iMax) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接数组元素 - 对象数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @param separator
+	 *            分隔符（为空：无分隔）
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(Object[] array, String separator) {
+		if (array == null || array.length < 1) {
+			return Empty;
+		}
+		boolean separatorEmpty = false;
+		if (separator == null || separator.length() < 1) {
+			separatorEmpty = true;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0, iMax = array.length - 1; i <= iMax; i++) {
+			sb.append(array[i]);
+			if (!separatorEmpty && i < iMax) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接列表元素
+	 * 
+	 * @param list
+	 *            列表
+	 * @param separator
+	 *            分隔符（为空：无分隔）
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(List<?> list, String separator) {
+		if (list == null || list.size() < 1) {
+			return Empty;
+		}
+		boolean separatorEmpty = false;
+		if (separator == null || separator.length() < 1) {
+			separatorEmpty = true;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0, iMax = list.size() - 1; i <= iMax; i++) {
+			sb.append(list.get(i));
+			if (!separatorEmpty && i < iMax) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 连接集合元素
+	 * 
+	 * @param set
+	 *            集合
+	 * @param separator
+	 *            分隔符（为空：无分隔）
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String join(Set<?> set, String separator) {
+		if (set == null || set.size() < 1) {
+			return Empty;
+		}
+		boolean separatorEmpty = false;
+		if (separator == null || separator.length() < 1) {
+			separatorEmpty = true;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (Iterator<?> it = set.iterator(); it.hasNext();) {
+			sb.append(it.next());
+			if (!separatorEmpty && it.hasNext()) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 转换为逗号分隔值(CSV) - int数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String toCsv(int[] array) {
+		return join(array, COMMA);
+	}
+
+	/**
+	 * 转换为逗号分隔值(CSV) - long数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String toCsv(long[] array) {
+		return join(array, COMMA);
+	}
+
+	/**
+	 * 转换为逗号分隔值(CSV) - 对象数组
+	 * 
+	 * @param array
+	 *            数组
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String toCsv(Object[] array) {
+		return join(array, COMMA);
+	}
+
+	/**
+	 * 转换为逗号分隔值(CSV) - 列表
+	 * 
+	 * @param list
+	 *            列表
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String toCsv(List<?> list) {
+		return join(list, COMMA);
+	}
+
+	/**
+	 * 转换为逗号分隔值(CSV) - 集合
+	 * 
+	 * @param set
+	 *            集合
+	 * @return 合并后的字符串（不为NULL）
+	 */
+	public static String toCsv(Set<?> set) {
+		return join(set, COMMA);
 	}
 
 	/**
@@ -375,7 +615,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * 字符串断句（按固定长度拆分）
+	 * 字符串断句 - 按长度拆分
 	 * 
 	 * @param str
 	 *            字符串（不能为空）
@@ -383,7 +623,7 @@ public class StringUtil {
 	 *            分隔符（不能为空）
 	 * @param unit
 	 *            单元长度（>=1）
-	 * @return 原字符串 或 断句结果
+	 * @return 断句结果
 	 */
 	public static String wordBreak(String str, String separator, int unit) {
 		if (isEmpty(str) || isEmpty(separator) || unit < 1) {
@@ -391,14 +631,42 @@ public class StringUtil {
 		}
 
 		StringBuilder sb = new StringBuilder();
-		int length = str.length();
-		for (int i = 0; i < length; i += unit) {
+		for (int i = 0, length = str.length(); i < length; i += unit) {
 			if (i + unit >= length) {
 				sb.append(str.substring(i));
 				break;
 			}
-			sb.append(str.substring(i, i + unit)).append(separator);
+			sb.append(str, i, i + unit).append(separator);
 		}
+		return sb.toString();
+	}
+
+	/**
+	 * 字符串断句 - 按大写字母拆分
+	 * 
+	 * @param str
+	 *            字符串（不能为空）
+	 * @param separator
+	 *            分隔符（不能为空）
+	 * @return 断句结果（非NULL）
+	 */
+	public static String breakByUpperCase(final String str, final String separator) {
+		if (str == null || str.isEmpty()) {
+			return Empty;
+		}
+
+		String _separator = (separator == null || separator.isEmpty()) ? " " : separator;
+		StringBuilder sb = new StringBuilder();
+		char c = 0;
+		int last = 0;
+		for (int i = 0, length = str.length(); i < length; i++) {
+			c = str.charAt(i);
+			if (i > 0 && (c >= 'A' && c <= 'Z')) {
+				sb.append(str, last, i).append(_separator);
+				last = i;
+			}
+		}
+		sb.append(str.substring(last));
 		return sb.toString();
 	}
 

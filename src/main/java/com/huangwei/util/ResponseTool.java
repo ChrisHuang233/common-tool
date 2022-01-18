@@ -1,18 +1,18 @@
 package com.huangwei.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Web页面相关工具
  */
 public class ResponseTool {
-	private static final Logger logger = LoggerFactory.getLogger(ResponseTool.class);
+	private static Logger logger = LoggerFactory.getLogger(ResponseTool.class);
 
 	/**
 	 * 单一查询条件
@@ -29,7 +29,7 @@ public class ResponseTool {
 			return null;
 		}
 
-		Map<String, Object> condition = new HashMap<String, Object>();
+		Map<String, Object> condition = new LinkedHashMap<String, Object>();
 		condition.put(key, value);
 		return condition;
 	}
@@ -49,9 +49,33 @@ public class ResponseTool {
 			return null;
 		}
 
-		Map<String, Object> result = new HashMap<String, Object>(1);
+		Map<String, Object> result = new LinkedHashMap<String, Object>(1);
 		result.put(key, value);
 		return result;
+	}
+
+	/**
+	 * 未登录
+	 * 
+	 * @return 结果（JSON字符串）
+	 */
+	public static String unauthorized() {
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", false);
+		response.put("message", "请登陆后重试！");
+		return JacksonUtil.toString(response);
+	}
+
+	/**
+	 * 权限不足
+	 * 
+	 * @return 结果（JSON字符串）
+	 */
+	public static String noPower() {
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", false);
+		response.put("message", "权限不足！");
+		return JacksonUtil.toString(response);
 	}
 
 	/**
@@ -66,13 +90,13 @@ public class ResponseTool {
 	 * @return DataTables数据（JSON字符串）
 	 */
 	public static String pageResult(Integer offset, int total, List<?> list) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("result", true);
-		result.put("iDisplayStart", offset == null ? 0 : offset);// 偏移量（从0开始）
-		result.put("iTotalRecords", total);// 总记录数
-		result.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
-		result.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
-		return JacksonUtil.toString(result);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", true);
+		response.put("iDisplayStart", offset == null ? 0 : offset);// 偏移量（从0开始）
+		response.put("iTotalRecords", total);// 总记录数
+		response.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
+		response.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
+		return JacksonUtil.toString(response);
 	}
 
 	/**
@@ -89,14 +113,14 @@ public class ResponseTool {
 	 * @return DataTables数据（JSON字符串）
 	 */
 	public static String pageResult(Integer offset, int total, List<?> list, Object data) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("result", true);
-		result.put("iDisplayStart", offset == null ? 0 : offset);// 偏移量（从0开始）
-		result.put("iTotalRecords", total);// 总记录数
-		result.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
-		result.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
-		result.put("data", data);// 额外数据
-		return JacksonUtil.toString(result);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", true);
+		response.put("iDisplayStart", offset == null ? 0 : offset);// 偏移量（从0开始）
+		response.put("iTotalRecords", total);// 总记录数
+		response.put("iTotalDisplayRecords", total);// (过滤后)显示的记录数
+		response.put("aaData", list == null ? Collections.EMPTY_LIST : list);// 结果集
+		response.put("data", data);// 额外数据
+		return JacksonUtil.toString(response);
 	}
 
 	/**
@@ -107,18 +131,42 @@ public class ResponseTool {
 	 * @return 结果（JSON字符串）
 	 */
 	public static String pageFault(String message) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("result", false);
-		result.put("message", message == null ? "查询失败！" : message);
-		result.put("iDisplayStart", 0);// 偏移量（从0开始）
-		result.put("iTotalRecords", 0);// 总记录数
-		result.put("iTotalDisplayRecords", 0);// (过滤后)显示的记录数
-		result.put("aaData", Collections.EMPTY_LIST);// 结果集
-		return JacksonUtil.toString(result);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", false);
+		response.put("message", message == null ? "查询失败！" : message);
+		response.put("iDisplayStart", 0);// 偏移量（从0开始）
+		response.put("iTotalRecords", 0);// 总记录数
+		response.put("iTotalDisplayRecords", 0);// (过滤后)显示的记录数
+		response.put("aaData", Collections.EMPTY_LIST);// 结果集
+		return JacksonUtil.toString(response);
 	}
 
 	/**
-	 * 查询结果
+	 * 结果
+	 * 
+	 * @param result
+	 *            结果（true:成功 false:失败）
+	 * @param message
+	 *            信息（为空：默认信息）
+	 * @return 结果（JSON字符串）
+	 */
+	public static String result(boolean result, String message) {
+		if (message == null) {
+			if (result) {
+				message = "成功！";
+			} else {
+				message = "失败！";
+			}
+		}
+
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", result);
+		response.put("message", message);
+		return JacksonUtil.toString(response);
+	}
+
+	/**
+	 * 结果
 	 * 
 	 * @param result
 	 *            结果（true:成功 false:失败）
@@ -131,17 +179,17 @@ public class ResponseTool {
 	public static String result(boolean result, String message, Object data) {
 		if (message == null) {
 			if (result) {
-				message = "查询成功！";
+				message = "成功！";
 			} else {
-				message = "查询失败！";
+				message = "失败！";
 			}
 		}
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("result", result);
-		map.put("message", message);
-		map.put("data", data);
-		return JacksonUtil.toString(map);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", result);
+		response.put("message", message);
+		response.put("data", data);
+		return JacksonUtil.toString(response);
 	}
 
 	/**
@@ -156,16 +204,16 @@ public class ResponseTool {
 	public static String operateResult(boolean result, String message) {
 		if (message == null) {
 			if (result) {
-				message = "操作成功！";
+				message = "成功！";
 			} else {
-				message = "操作失败！";
+				message = "失败！";
 			}
 		}
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("result", result);
-		map.put("message", message);
-		return JacksonUtil.toString(map);
+		Map<String, Object> response = new LinkedHashMap<String, Object>();
+		response.put("result", result);
+		response.put("message", message);
+		return JacksonUtil.toString(response);
 	}
 
 }

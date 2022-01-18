@@ -89,11 +89,12 @@ public class QRCodeUtil {
 	 *            生成二维码的路径
 	 * @param needCompress
 	 *            是否需要压缩
-	 * @return
+	 * @return 二维码
 	 * @throws Exception
+	 *             异常
 	 */
 	private static BufferedImage createImage(String content, String imgPath, boolean needCompress) throws Exception {
-		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+		Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 		hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 		hints.put(EncodeHintType.MARGIN, 1);
@@ -125,6 +126,7 @@ public class QRCodeUtil {
 	 * @param needCompress
 	 *            是否需要压缩
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
 		File file = new File(imgPath);
@@ -134,7 +136,7 @@ public class QRCodeUtil {
 		BufferedImage src = ImageIO.read(new File(imgPath));
 		int width = src.getWidth(null);
 		int height = src.getHeight(null);
-		int radius = 6;
+		// int radius = 6;
 		// 压缩LOGO
 		if (needCompress) {
 			if (width > WIDTH) {
@@ -192,7 +194,7 @@ public class QRCodeUtil {
 			throws Exception {
 		int width = src.getWidth(null);
 		int height = src.getHeight(null);
-		int radius = 6;
+		// int radius = 6;
 		// 压缩LOGO
 		if (needCompress) {
 			if (width > WIDTH) {
@@ -238,6 +240,7 @@ public class QRCodeUtil {
 	 * @param needCompress
 	 *            是否需要压缩
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
 		BufferedImage image = createImage(content, imgPath, needCompress);
@@ -254,6 +257,7 @@ public class QRCodeUtil {
 	 * @param destPath
 	 *            生成之后二维码路径
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void encode(String content, String imgPath, String destPath) throws Exception {
 		encode(content, imgPath, destPath, false);
@@ -266,6 +270,7 @@ public class QRCodeUtil {
 	 * @param destPath
 	 *            生成之后二维码路径
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void encode(String content, String destPath) throws Exception {
 		encode(content, null, destPath, false);
@@ -282,6 +287,7 @@ public class QRCodeUtil {
 	 * @param needCompress
 	 *            是否需要压缩
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void encode(String content, String imgPath, OutputStream output, boolean needCompress)
 			throws Exception {
@@ -296,6 +302,7 @@ public class QRCodeUtil {
 	 * @param output
 	 *            输出流
 	 * @throws Exception
+	 *             异常
 	 */
 	public static void encode(String content, OutputStream output) throws Exception {
 		encode(content, null, output, false);
@@ -306,8 +313,9 @@ public class QRCodeUtil {
 	 *
 	 * @param file
 	 *            二维码路径+二维码名称
-	 * @return
+	 * @return 解码信息
 	 * @throws Exception
+	 *             异常
 	 */
 	public static String decode(File file) throws Exception {
 		BufferedImage image;
@@ -318,13 +326,12 @@ public class QRCodeUtil {
 		BufferedImageLuminanceSource source = new BufferedImageLuminanceSource(image);
 		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 		Result result;
-		Hashtable<DecodeHintType, Object> hints = new Hashtable<DecodeHintType, Object>();
+		Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
 		hints.put(DecodeHintType.CHARACTER_SET, CHARSET);
 		hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);// 优化精度
 		hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);// 复杂模式，开启PURE_BARCODE模式
 		result = new MultiFormatReader().decode(bitmap, hints);
-		String resultStr = result.getText();
-		return resultStr;
+		return result.getText();
 	}
 
 	/**
@@ -332,8 +339,9 @@ public class QRCodeUtil {
 	 *
 	 * @param path
 	 *            二维码路径+二维码名称
-	 * @return
+	 * @return 解码信息
 	 * @throws Exception
+	 *             异常
 	 */
 	public static String decode(String path) throws Exception {
 		return decode(new File(path));
@@ -345,11 +353,14 @@ public class QRCodeUtil {
 	 * @param destPath
 	 *            文件夹路径
 	 */
-	public static void mkdirs(String destPath) {
+	public static void mkdirs(String destPath) throws Exception {
 		File file = new File(destPath);
 		// 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
 		if (!file.exists() && !file.isDirectory()) {
-			file.mkdirs();
+			boolean success = file.mkdirs();
+			if (!success) {
+				throw new Exception("文件夹创建失败!");
+			}
 		}
 	}
 

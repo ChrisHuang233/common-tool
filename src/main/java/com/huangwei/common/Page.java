@@ -54,8 +54,11 @@ public class Page<T> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Page [condition=" + condition + ", offset=" + offset + ", limit=" + limit + ", total=" + total
-				+ ", size=" + size + ", result=" + result + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("[clazz=Page, condition=").append(condition).append(", offset=").append(offset)
+				.append(", limit=").append(limit).append(", total=").append(total).append(", size=").append(size)
+				.append(", result=").append(result).append("]");
+		return builder.toString();
 	}
 
 	/* ----------------- Getters and Setters ----------------- */

@@ -1,14 +1,14 @@
 package com.huangwei.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 系统工具
@@ -131,7 +131,7 @@ public class SystemUtil {
 			localIP = getAllLocalIP();
 		}
 
-		return localIP != null && localIP.contains(ip);
+		return localIP == null ? false : localIP.contains(ip);
 	}
 
 }
