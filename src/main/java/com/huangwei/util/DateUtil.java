@@ -1630,4 +1630,67 @@ public class DateUtil {
 		return sb.toString();
 	}
 
+
+	/**
+	 * 口语化 - 毫秒（最高单位：天；最低单位：毫秒）
+	 *
+	 * @param n
+	 *            毫秒数（>0）
+	 * @return x天x小时x分钟x秒x毫秒
+	 */
+	public static String oral4Millisecond(long n) {
+		if (n < 1) {
+			return "0毫秒";
+		}
+
+		long millisecond = 0, second = 0, minute = 0, hour = 0, day = 0;
+		if (n > 0) {// 毫秒
+			millisecond = n % 1000L;
+			n = n / 1000L;
+			if (n > 0) {// 秒
+				second = n % 60L;
+				n = n / 60L;
+				if (n > 0) {// 分钟
+					minute = n % 60L;
+					n = n / 60L;
+					if (n > 0) {// 小时
+						hour = n % 24L;
+						n = n / 24L;
+						if (n > 0) {// 天
+							day = n;
+						}
+					}
+				}
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		if (day > 0) {
+			sb.append(day).append("天");
+		}
+		if (hour > 0) {
+			sb.append(hour).append("小时");
+		}
+		if (minute > 0) {
+			sb.append(minute).append("分钟");
+		}
+		if (second > 0) {
+			sb.append(second).append("秒");
+		}
+		if (millisecond > 0 || sb.length() == 0) {
+			sb.append(millisecond).append("毫秒");
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 计算耗时
+	 *
+	 * @param starting
+	 *            开始时间（毫秒值）
+	 * @return x天x小时x分钟x秒x毫秒
+	 */
+	public static String elapsedTime(long starting) {
+		return oral4Millisecond(Math.abs(System.currentTimeMillis() - starting));
+	}
+
 }

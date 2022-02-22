@@ -538,14 +538,7 @@ public class ExcelUtil {
 		} catch (Exception e) {
 			logger.error("[Excel导出]出错！filename:{}", filename, e);
 		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (Exception e) {
-					logger.error("[Excel导出]关闭输出流出错！filename:{}", filename, e);
-				}
-			}
-			if (excel != null && (excel instanceof SXSSFWorkbook)) {
+			if (excel instanceof SXSSFWorkbook) {
 				((SXSSFWorkbook) excel).dispose();
 				excel = null;
 			}
