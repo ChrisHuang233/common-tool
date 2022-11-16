@@ -20,7 +20,7 @@
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<json-lib.version>2.4</json-lib.version>
-		<jackson.version>2.12.1</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 		<poi-ooxml.version>3.17</poi-ooxml.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<slf4j.version>1.7.25</slf4j.version>
